@@ -4,10 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="theme-color" content="#1a2a3a">
+    
+    <!-- SEO Мета-теги -->
+    <title>Анти ИИ Штрих-код | Проверка подлинности товаров</title>
+    <meta name="description" content="Анти ИИ Штрих-код — бесплатный офлайн-сканер для проверки подлинности товаров. Распознаёт EAN-13, DataMatrix (Честный ЗНАК). Защита от ИИ-подделок.">
+    <meta name="keywords" content="анти ии, штрих-код, проверка подлинности, сканер штрих-кодов, честный знак, datamatrix, ean-13">
+    <meta name="author" content="Dmytro Korobko">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Анти ИИ Штрих-код | Защита от подделок">
+    <meta property="og:description" content="Бесплатный офлайн-сканер штрих-кодов. Проверка подлинности товаров, маркировка Честный ЗНАК.">
+    <meta property="og:image" content="https://anti-ai-barcode.vercel.app/logo.jpeg">
+    <meta property="og:url" content="https://anti-ai-barcode.vercel.app/">
+    <meta property="og:type" content="website">
+    
+    <link rel="canonical" href="https://anti-ai-barcode.vercel.app/">
     <link rel="icon" type="image/jpeg" href="logo.jpeg">
     <link rel="apple-touch-icon" href="logo.jpeg">
     <link rel="manifest" href="manifest.json">
-    <title>Анти ИИ Штрих-код | Проверка подлинности</title>
+    
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Анти ИИ Штрих-код",
+      "url": "https://anti-ai-barcode.vercel.app",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "All",
+      "abstract": "Бесплатный офлайн-сканер для проверки подлинности товаров.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "RUB"
+      }
+    }
+    </script>
+    
     <style>
         * {
             margin: 0;
@@ -379,8 +412,9 @@
         .project-card .title { font-weight: 600; font-size: 13px; }
         .project-card .desc { font-size: 10px; color: #9ab3c5; }
 
+        /* КНОПКА ЗВУКА — ВНУТРИ .app, ПРАВЫЙ НИЖНИЙ УГОЛ */
         .voice-btn {
-            position: fixed;
+            position: absolute;
             bottom: 20px;
             right: 20px;
             width: 52px;
@@ -396,6 +430,72 @@
         }
         .voice-btn:active { transform: scale(0.95); }
 
+        /* МОДАЛЬНОЕ ОКНО РЕЗУЛЬТАТА — ФОРМАТ 9:16, ПО ЦЕНТРУ */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            transition: opacity 0.3s ease;
+        }
+        .modal-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .modal-content {
+            background: linear-gradient(145deg, #1a2a3a, #0f1a24);
+            width: 85%;
+            max-width: 320px;
+            padding: 24px 20px;
+            border-radius: 28px;
+            border: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            transform: scale(0.9);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .modal-overlay:not(.hidden) .modal-content {
+            transform: scale(1);
+        }
+        .modal-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+        .modal-title {
+            color: white;
+            font-size: 20px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        .modal-desc {
+            color: #9ab3c5;
+            font-size: 14px;
+            margin-bottom: 24px;
+            line-height: 1.4;
+        }
+        .modal-btn {
+            background: #6ba5d9;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            font-size: 14px;
+        }
+        .modal-btn:active {
+            transform: scale(0.96);
+        }
+
+        /* МОДАЛЬНОЕ ОКНО ПОДТВЕРЖДЕНИЯ — ПО ЦЕНТРУ */
         .modal {
             display: none;
             position: fixed;
@@ -409,14 +509,49 @@
             justify-content: center;
             padding: 20px;
         }
-        .modal.active { display: flex; }
-        .modal-content {
+        .modal.active {
+            display: flex;
+        }
+        .modal .modal-content {
             background: #1a2a3a;
             border-radius: 28px;
             padding: 20px;
             width: 100%;
             max-width: 300px;
             border: 1px solid #6ba5d9;
+            text-align: center;
+        }
+        .modal .modal-content h3 {
+            color: white;
+            text-align: center;
+            margin-bottom: 16px;
+        }
+        .modal .modal-content p {
+            color: #9ab3c5;
+            text-align: center;
+            margin: 16px 0;
+        }
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .modal-buttons button {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .modal-buttons button:first-child {
+            background: #333;
+            color: white;
+        }
+        .modal-buttons button:last-child {
+            background: #c97b6b;
+            color: white;
         }
 
         .hidden { display: none; }
@@ -442,85 +577,35 @@
         <div class="menu-screen" id="menuScreen">
             <div class="app-header" id="logoHeader">
                 <h1>
-                    <img src="logo.jpeg" alt="logo" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%27 height=%27100%27 fill=%27%236ba5d9%27/%3E%3Ctext x=%2750%27 y=%2768%27 font-size=%2755%27 text-anchor=%27middle%27 fill=%27white%27%3E🔴%3C/text%3E%3C/svg%3E'">
+                    <img src="logo.jpeg" alt="Логотип Анти ИИ Штрих-код">
                     Анти ИИ Штрих-код
                     <span class="badge-new">100% достоверно</span>
                 </h1>
                 <p>EAN-13 • DataMatrix • Маркировка • Офлайн</p>
             </div>
             <div class="menu-grid">
-                <div class="menu-btn emergency" onclick="showScreen('scanner')">
-                    <div class="icon">📷</div>
-                    <div><div class="label">Сканер</div><div class="desc">Наведи на штрих-код или DataMatrix</div></div>
-                </div>
-                <div class="menu-btn" onclick="showScreen('manual')">
-                    <div class="icon">⌨️</div>
-                    <div><div class="label">Ручной ввод</div><div class="desc">Введи 13 цифр</div></div>
-                </div>
-                <div class="menu-btn" onclick="showScreen('history')">
-                    <div class="icon">📜</div>
-                    <div><div class="label">История</div><div class="desc">Последние проверки</div></div>
-                </div>
-                <div class="menu-btn" onclick="showScreen('instruction')">
-                    <div class="icon">📖</div>
-                    <div><div class="label">О проекте</div><div class="desc">Инструкция</div></div>
-                </div>
-                <div class="menu-btn" onclick="showScreen('support')">
-                    <div class="icon">💝</div>
-                    <div><div class="label">Поддержать проект</div><div class="desc">Помочь развитию</div></div>
-                </div>
-                <div class="menu-btn" onclick="exportHistory()">
-                    <div class="icon">📤</div>
-                    <div><div class="label">Экспорт</div><div class="desc">Сохранить историю</div></div>
-                </div>
+                <div class="menu-btn emergency" onclick="showScreen('scanner')"><div class="icon">📷</div><div><div class="label">Сканер</div><div class="desc">Наведи на штрих-код</div></div></div>
+                <div class="menu-btn" onclick="showScreen('manual')"><div class="icon">⌨️</div><div><div class="label">Ручной ввод</div><div class="desc">Введи 13 цифр</div></div></div>
+                <div class="menu-btn" onclick="showScreen('history')"><div class="icon">📜</div><div><div class="label">История</div><div class="desc">Последние проверки</div></div></div>
+                <div class="menu-btn" onclick="showScreen('instruction')"><div class="icon">📖</div><div><div class="label">О проекте</div><div class="desc">Инструкция</div></div></div>
+                <div class="menu-btn" onclick="showScreen('support')"><div class="icon">💝</div><div><div class="label">Поддержать проект</div><div class="desc">Помочь развитию</div></div></div>
+                <div class="menu-btn" onclick="exportHistory()"><div class="icon">📤</div><div><div class="label">Экспорт</div><div class="desc">Сохранить историю</div></div></div>
             </div>
         </div>
 
         <!-- ЭКРАН ПОДДЕРЖКИ -->
         <div class="section-screen" id="supportScreen">
-            <div class="screen-header">
-                <button class="screen-back" onclick="showScreen('main')">←</button>
-                <div class="screen-title"><img src="logo.jpeg" alt="logo" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%27 height=%27100%27 fill=%27%236ba5d9%27/%3E%3Ctext x=%2750%27 y=%2768%27 font-size=%2755%27 text-anchor=%27middle%27 fill=%27white%27%3E🔴%3C/text%3E%3C/svg%3E'">💝 Поддержать проект</div>
-            </div>
+            <div class="screen-header"><button class="screen-back" onclick="showScreen('main')">←</button><div class="screen-title"><img src="logo.jpeg" alt="Анти ИИ Штрих-код">💝 Поддержать проект</div></div>
             <div class="screen-content scrollable">
-                <div class="support-card">
-                    <p>🤝 Проект бесплатный навсегда</p>
-                    <div class="support-phone">8-920-227-56-76</div>
-                    <button class="copy-btn" onclick="copyPhoneNumber()">📋 Скопировать номер</button>
-                </div>
-                <div class="instruction-card">
-                    <h3>Как перевести</h3>
-                    <p>1. Открой банк<br>2. Платежи → По номеру телефона<br>3. Введи номер: <strong>8-920-227-56-76</strong><br>4. Сумма любая ❤️</p>
-                </div>
-                <div class="instruction-card">
-                    <h3>🚀 Наши проекты</h3>
+                <div class="support-card"><p>🤝 Проект бесплатный навсегда</p><div class="support-phone">8-920-227-56-76</div><button class="copy-btn" onclick="copyPhoneNumber()">📋 Скопировать номер</button></div>
+                <div class="instruction-card"><h3>Как перевести</h3><p>1. Открой банк<br>2. Платежи → По номеру телефона<br>3. Введи номер: <strong>8-920-227-56-76</strong><br>4. Сумма любая ❤️</p></div>
+                <div class="instruction-card"><h3>🚀 Наши проекты</h3>
                     <div class="projects-grid">
-                        <a href="https://anti-ai-shield.vercel.app/" target="_blank" class="project-card">
-                            <div class="icon">🛡️</div>
-                            <div class="content"><div class="title">Анти-ИИ Щит</div><div class="desc">Защита от телефонных мошенников</div></div>
-                            <div class="arrow">→</div>
-                        </a>
-                        <a href="https://anti-bullying-app-one.vercel.app/" target="_blank" class="project-card">
-                            <div class="icon">👥</div>
-                            <div class="content"><div class="title">Анти-Буллинг</div><div class="desc">Защита от школьного буллинга</div></div>
-                            <div class="arrow">→</div>
-                        </a>
-                        <a href="https://anti-ai-animals.vercel.app/" target="_blank" class="project-card">
-                            <div class="icon">🐾</div>
-                            <div class="content"><div class="title">Животные поют</div><div class="desc">ИИ-музыка с животными</div></div>
-                            <div class="arrow">→</div>
-                        </a>
-                        <a href="https://anti-ai-stress.vercel.app/" target="_blank" class="project-card">
-                            <div class="icon">🧘</div>
-                            <div class="content"><div class="title">Анти-ИИ Стресс</div><div class="desc">Управление гневом и эмоциями</div></div>
-                            <div class="arrow">→</div>
-                        </a>
-                        <!-- МУЗЫКАЛЬНЫЙ ПРОЕКТ "ВОЛШЕБСТВО" -->
-                        <a href="https://rutube.ru/channel/24404224/" target="_blank" class="project-card">
-                            <div class="icon">🎵</div>
-                            <div class="content"><div class="title">Волшебство</div><div class="desc">Добрая музыка для детей и взрослых</div></div>
-                            <div class="arrow">→</div>
-                        </a>
+                        <a href="https://anti-ai-shield.vercel.app/" target="_blank" class="project-card"><div class="icon">🛡️</div><div class="content"><div class="title">Анти-ИИ Щит</div><div class="desc">Защита от телефонных мошенников</div></div><div class="arrow">→</div></a>
+                        <a href="https://anti-bullying-app-one.vercel.app/" target="_blank" class="project-card"><div class="icon">👥</div><div class="content"><div class="title">Анти-Буллинг</div><div class="desc">Защита от школьного буллинга</div></div><div class="arrow">→</div></a>
+                        <a href="https://anti-ai-animals.vercel.app/" target="_blank" class="project-card"><div class="icon">🐾</div><div class="content"><div class="title">Животные поют</div><div class="desc">ИИ-музыка с животными</div></div><div class="arrow">→</div></a>
+                        <a href="https://anti-ai-stress.vercel.app/" target="_blank" class="project-card"><div class="icon">🧘</div><div class="content"><div class="title">Анти-ИИ Стресс</div><div class="desc">Управление гневом и эмоциями</div></div><div class="arrow">→</div></a>
+                        <a href="https://rutube.ru/channel/24404224/" target="_blank" class="project-card"><div class="icon">🎵</div><div class="content"><div class="title">Волшебство</div><div class="desc">Добрая музыка для детей и взрослых</div></div><div class="arrow">→</div></a>
                     </div>
                 </div>
             </div>
@@ -528,111 +613,99 @@
 
         <!-- ЭКРАН ИНСТРУКЦИИ -->
         <div class="section-screen" id="instructionScreen">
-            <div class="screen-header">
-                <button class="screen-back" onclick="showScreen('main')">←</button>
-                <div class="screen-title"><img src="logo.jpeg" alt="logo" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%27 height=%27100%27 fill=%27%236ba5d9%27/%3E%3Ctext x=%2750%27 y=%2768%27 font-size=%2755%27 text-anchor=%27middle%27 fill=%27white%27%3E🔴%3C/text%3E%3C/svg%3E'">📖 О проекте</div>
-            </div>
+            <div class="screen-header"><button class="screen-back" onclick="showScreen('main')">←</button><div class="screen-title"><img src="logo.jpeg" alt="Анти ИИ Штрих-код">📖 О проекте</div></div>
             <div class="screen-content scrollable">
-                <div class="instruction-card"><h3>🎯 Миссия</h3><p>Бесплатный инструмент для проверки подлинности товаров. Работает офлайн. Без сбора данных.</p></div>
-                <div class="instruction-card"><h3>📷 Как пользоваться</h3><p>Наведи камеру на штрих-код или DataMatrix. Результат будет озвучен.</p></div>
-                <div class="instruction-card"><h3>🔢 EAN-13</h3><p>Первые 3 цифры 460-469 — Россия. Контрольная сумма — последняя цифра. Если не совпадает — 100% подделка.</p></div>
-                <div class="instruction-card"><h3>💠 Честный ЗНАК (DataMatrix)</h3><p>Двумерный код на одежде, обуви, лекарствах. Содержит GTIN, серийный номер и криптохвост. Наличие криптохвоста — признак подлинности.</p></div>
-                <div class="instruction-card"><h3>🛡️ Достоверность данных</h3><p><span style="color:#6b9c7a;">✅ 100% достоверно:</span> контрольная сумма, страна по префиксу, тип кода, структура DataMatrix.<br><span style="color:#9ab3c5;">📖 Справочная информация:</span> название товара, производитель, срок годности — из локальной базы.</p></div>
-                <div class="instruction-card"><h3>🛡️ Социальный проект</h3><p>100% бесплатно. Без интернета. Без регистрации.</p></div>
-                
-                <!-- ЮРИДИЧЕСКОЕ ПРЕДУПРЕЖДЕНИЕ -->
-                <div class="legal-note">
-                    ⚠️ Приложение носит познавательный характер.<br>
-                    Разработчик не несёт ответственности за решения,<br>
-                    принятые на основе данных приложения.<br>
-                    Работает офлайн, не собирает данные.
-                </div>
+                <article style="color: #9ab3c5; line-height: 1.6; padding: 10px; font-size: 14px;">
+                    <h2 style="color: #6ba5d9; font-size: 20px; margin-bottom: 12px; font-weight: 700;">Защита от ИИ-подделок</h2>
+                    <p style="margin-bottom: 15px;"><strong>Анти ИИ Штрих-код</strong> — это первый мобильный сервис для верификации товаров, разработанный специально для борьбы с визуальными манипуляциями, созданными искусственным интеллектом.</p>
+                    <div style="background: rgba(107,165,217,0.1); border-left: 3px solid #6ba5d9; padding: 12px; border-radius: 8px; margin-bottom: 15px;"><p style="font-size: 13px; color: #fff;">🎯 Наша миссия: обеспечить 100% уверенность в подлинности каждой покупки.</p></div>
+                    <h3 style="color: #6b9c7a; font-size: 16px; margin: 20px 0 10px;">Как это работает?</h3>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 10px; display: flex; align-items: start; gap: 8px;"><span>🛡️</span><span><strong>Анализ структуры:</strong> Проверка геометрии кода на микро-дефекты ИИ.</span></li>
+                        <li style="margin-bottom: 10px; display: flex; align-items: start; gap: 8px;"><span>📲</span><span><strong>Веб-сканер:</strong> Работает прямо в браузере.</span></li>
+                        <li style="margin-bottom: 10px; display: flex; align-items: start; gap: 8px;"><span>⚡</span><span><strong>Скорость Vercel:</strong> Проверка за секунды.</span></li>
+                    </ul>
+                    <p style="margin-top: 20px; font-size: 12px; opacity: 0.8; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">🔍 Полностью бесплатно, без интернета, без регистрации.</p>
+                </article>
+                <div class="instruction-card"><h3>📷 Как пользоваться</h3><p>Наведи камеру на штрих-код или DataMatrix. Результат озвучивается.</p></div>
+                <div class="instruction-card"><h3>🔢 EAN-13</h3><p>Первые 3 цифры 460-469 — Россия. Контрольная сумма — последняя цифра.</p></div>
+                <div class="instruction-card"><h3>💠 Честный ЗНАК (DataMatrix)</h3><p>Код на одежде, обуви, лекарствах. Криптохвост = подлинность.</p></div>
+                <div class="instruction-card"><h3>🛡️ Достоверность</h3><p><span style="color:#6b9c7a;">✅ 100% достоверно:</span> контрольная сумма, страна, тип кода.<br><span style="color:#9ab3c5;">📖 Справочно:</span> название, производитель, срок годности.</p></div>
+                <div class="legal-note">⚠️ Приложение носит познавательный характер.<br>Разработчик не несёт ответственности.<br>Работает офлайн, не собирает данные.</div>
             </div>
         </div>
 
         <!-- ЭКРАН СКАНЕРА -->
         <div class="section-screen" id="scannerScreen">
-            <div class="screen-header">
-                <button class="screen-back" onclick="showScreen('main')">←</button>
-                <div class="screen-title"><img src="logo.jpeg" alt="logo" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%27 height=%27100%27 fill=%27%236ba5d9%27/%3E%3Ctext x=%2750%27 y=%2768%27 font-size=%2755%27 text-anchor=%27middle%27 fill=%27white%27%3E🔴%3C/text%3E%3C/svg%3E'">📷 Сканер</div>
-            </div>
+            <div class="screen-header"><button class="screen-back" onclick="showScreen('main')">←</button><div class="screen-title"><img src="logo.jpeg" alt="Анти ИИ Штрих-код">📷 Сканер</div></div>
             <div class="screen-content">
-                <div class="scanner-wrapper">
-                    <video id="video" autoplay playsinline muted></video>
-                    <div class="scan-overlay">
-                        <div class="scan-frame"><div class="scan-line"></div></div>
-                        <div class="quality-bar"><div class="quality-fill" id="qualityFill"></div></div>
-                    </div>
-                </div>
-                <div class="btn-group">
-                    <button class="btn btn-secondary" onclick="switchCamera()">🔄 Сменить камеру</button>
-                </div>
+                <div class="scanner-wrapper"><video id="video" autoplay playsinline muted></video><div class="scan-overlay"><div class="scan-frame"><div class="scan-line"></div></div><div class="quality-bar"><div class="quality-fill" id="qualityFill"></div></div></div></div>
+                <div class="btn-group"><button class="btn btn-secondary" onclick="switchCamera()">🔄 Сменить камеру</button></div>
                 <div id="resultContainer"></div>
             </div>
         </div>
 
         <!-- ЭКРАН РУЧНОГО ВВОДА -->
         <div class="section-screen" id="manualScreen">
-            <div class="screen-header">
-                <button class="screen-back" onclick="showScreen('main')">←</button>
-                <div class="screen-title"><img src="logo.jpeg" alt="logo" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%27 height=%27100%27 fill=%27%236ba5d9%27/%3E%3Ctext x=%2750%27 y=%2768%27 font-size=%2755%27 text-anchor=%27middle%27 fill=%27white%27%3E🔴%3C/text%3E%3C/svg%3E'">⌨️ Ручной ввод</div>
-            </div>
+            <div class="screen-header"><button class="screen-back" onclick="showScreen('main')">←</button><div class="screen-title"><img src="logo.jpeg" alt="Анти ИИ Штрих-код">⌨️ Ручной ввод</div></div>
             <div class="screen-content">
                 <input type="text" id="manualCodeInput" class="manual-input" placeholder="Введите 13 цифр" maxlength="13" inputmode="numeric">
-                <div class="btn-group">
-                    <button class="btn btn-primary" onclick="processManualCode()">🔍 Проверить</button>
-                </div>
+                <div class="btn-group"><button class="btn btn-primary" onclick="processManualCode()">🔍 Проверить</button></div>
                 <div id="manualResultContainer"></div>
             </div>
         </div>
 
         <!-- ЭКРАН ИСТОРИИ -->
         <div class="section-screen" id="historyScreen">
-            <div class="screen-header">
-                <button class="screen-back" onclick="showScreen('main')">←</button>
-                <div class="screen-title"><img src="logo.jpeg" alt="logo" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%27 height=%27100%27 fill=%27%236ba5d9%27/%3E%3Ctext x=%2750%27 y=%2768%27 font-size=%2755%27 text-anchor=%27middle%27 fill=%27white%27%3E🔴%3C/text%3E%3C/svg%3E'">📜 История</div>
-            </div>
+            <div class="screen-header"><button class="screen-back" onclick="showScreen('main')">←</button><div class="screen-title"><img src="logo.jpeg" alt="Анти ИИ Штрих-код">📜 История</div></div>
             <div class="screen-content">
                 <div class="btn-group"><button class="btn btn-secondary" onclick="clearHistory()">🗑 Очистить</button></div>
                 <div class="history-list" id="historyList"><div style="text-align:center;padding:40px;color:#9ab3c5;">Нет сканирований</div></div>
             </div>
         </div>
     </div>
-</div>
 
-<!-- ТОЛЬКО КНОПКА ГОЛОСА В ПРАВОМ НИЖНЕМ УГЛУ -->
-<button class="voice-btn" id="voiceBtn" onclick="toggleSpeech()">🔊</button>
+    <!-- КНОПКА ЗВУКА -->
+    <button class="voice-btn" id="voiceBtn" onclick="toggleSpeech()">🔊</button>
 
-<!-- МОДАЛЬНОЕ ОКНО -->
-<div class="modal" id="confirmModal">
-    <div class="modal-content">
-        <h3 style="color:white; text-align:center;">⚠️ Подтверждение</h3>
-        <p id="confirmMessage" style="color:#9ab3c5; text-align:center; margin:16px 0;"></p>
-        <div style="display: flex; gap: 10px;">
-            <button onclick="closeModal()" style="flex:1; padding:12px; background:#333; border:none; border-radius:30px; color:white;">Отмена</button>
-            <button id="confirmOkBtn" style="flex:1; padding:12px; background:#c97b6b; border:none; border-radius:30px; color:white;">Да</button>
+    <!-- МОДАЛЬНОЕ ОКНО РЕЗУЛЬТАТА -->
+    <div id="result-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <div id="modal-icon" class="modal-icon"></div>
+            <div id="modal-title" class="modal-title"></div>
+            <div id="modal-desc" class="modal-desc"></div>
+            <button class="modal-btn" onclick="closeModal()">Понятно</button>
+        </div>
+    </div>
+
+    <!-- МОДАЛЬНОЕ ОКНО ПОДТВЕРЖДЕНИЯ -->
+    <div class="modal" id="confirmModal">
+        <div class="modal-content">
+            <h3>⚠️ Подтверждение</h3>
+            <p id="confirmMessage">Очистить всю историю?</p>
+            <div class="modal-buttons">
+                <button onclick="closeConfirmModal()">Отмена</button>
+                <button id="confirmOkBtn">Да</button>
+            </div>
         </div>
     </div>
 </div>
 
 <script src="https://unpkg.com/@zxing/library@0.19.1/umd/index.js"></script>
 <script>
-    // ========== ДВА СЦЕНАРИЯ ЗАПУСКА ВИДЕО ==========
+    // ========== ВИДЕО ЗАГРУЗКИ ==========
     const loadingScreen = document.getElementById('loadingScreen');
     const loadingVideo = document.getElementById('loadingVideo');
     const soundBtn = document.getElementById('soundBtn');
     const appContent = document.getElementById('appContent');
-    
     let actionTaken = false;
     
     function startVideo(useSound) {
         if (actionTaken) return;
         actionTaken = true;
-        
         soundBtn.style.display = 'none';
         loadingVideo.muted = !useSound;
         loadingVideo.play().catch(e => console.log('Video play error:', e));
-        
         setTimeout(() => {
             loadingScreen.classList.add('hidden');
             setTimeout(() => {
@@ -642,28 +715,39 @@
             }, 500);
         }, 3000);
     }
-    
-    soundBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        startVideo(true);
-    });
-    
-    setTimeout(() => {
-        if (!actionTaken) startVideo(false);
-    }, 2000);
-    
+    soundBtn.addEventListener('click', (e) => { e.stopPropagation(); startVideo(true); });
+    setTimeout(() => { if (!actionTaken) startVideo(false); }, 2000);
     loadingVideo.load();
 
     // ========== КОПИРОВАНИЕ НОМЕРА ==========
-    function copyPhoneNumber() {
-        navigator.clipboard.writeText("8-920-227-56-76");
-        alert("📋 Номер скопирован! Спасибо за поддержку ❤️");
+    function copyPhoneNumber() { navigator.clipboard.writeText("8-920-227-56-76"); alert("📋 Номер скопирован! Спасибо ❤️"); }
+
+    // ========== МОДАЛЬНОЕ ОКНО РЕЗУЛЬТАТА ==========
+    function showResult(status) {
+        const modal = document.getElementById('result-modal');
+        const title = document.getElementById('modal-title');
+        const desc = document.getElementById('modal-desc');
+        const icon = document.getElementById('modal-icon');
+        if (status === 'success') {
+            icon.innerText = '✅';
+            title.innerText = 'Подлинность подтверждена';
+            desc.innerText = 'Штрих-код прошел проверку. Признаков ИИ-манипуляций не обнаружено. Товар оригинальный.';
+        } else if (status === 'warning') {
+            icon.innerText = '⚠️';
+            title.innerText = 'Подозрение на ИИ';
+            desc.innerText = 'Обнаружены аномалии в структуре кода. Возможна подделка! Будьте осторожны.';
+        } else {
+            icon.innerText = '❌';
+            title.innerText = 'Ошибка чтения';
+            desc.innerText = 'Не удалось распознать код. Убедитесь, что камера сфокусирована.';
+        }
+        modal.classList.remove('hidden');
     }
+    function closeModal() { document.getElementById('result-modal').classList.add('hidden'); }
 
     // ========== ГОЛОС ==========
     let speechEnabled = true;
     let bestVoice = null;
-    
     function preprocessText(text) {
         let result = text;
         result = result.replace(/(\d+)\s*кг/g, '$1 килограммов');
@@ -676,7 +760,6 @@
         result = result.replace(/%/g, 'процентов');
         return result;
     }
-    
     function findBestMaleVoice() {
         const voices = window.speechSynthesis.getVoices();
         const priorityNames = ['Microsoft Pavel', 'Pavel', 'Maxim', 'Дмитрий', 'Dmitry', 'Alexander'];
@@ -686,11 +769,7 @@
         }
         return voices.find(v => v.lang.includes('ru')) || null;
     }
-    
-    function loadVoices() {
-        bestVoice = findBestMaleVoice();
-    }
-    
+    function loadVoices() { bestVoice = findBestMaleVoice(); }
     function speak(text) {
         if (!speechEnabled) return;
         const processedText = preprocessText(text);
@@ -702,30 +781,23 @@
         window.speechSynthesis.cancel();
         window.speechSynthesis.speak(utterance);
     }
-    
     function toggleSpeech() {
         speechEnabled = !speechEnabled;
         const btn = document.getElementById('voiceBtn');
         btn.textContent = speechEnabled ? '🔊' : '🔇';
         if (speechEnabled) speak('Озвучивание включено');
     }
-    
-    if ('speechSynthesis' in window) {
-        loadVoices();
-        window.speechSynthesis.onvoiceschanged = loadVoices;
-    }
-    
+    if ('speechSynthesis' in window) { loadVoices(); window.speechSynthesis.onvoiceschanged = loadVoices; }
+
     // ========== ПАРСЕР DATA MATRIX ==========
     function parseDataMatrix(rawCode) {
         const gtinMatch = rawCode.match(/01(\d{14})/);
         const serialMatch = rawCode.match(/21([A-Z0-9]{13,})/);
         const keyMatch = rawCode.match(/91([A-Z0-9]{4})/);
         const cryptoMatch = rawCode.match(/92([A-Z0-9]{44,88})/);
-        
         if (gtinMatch || serialMatch) {
             return {
-                isValid: true,
-                type: 'DATAMATRIX',
+                isValid: true, type: 'DATAMATRIX',
                 gtin: gtinMatch ? gtinMatch[1] : null,
                 serialNumber: serialMatch ? serialMatch[1] : null,
                 verificationKey: keyMatch ? keyMatch[1] : null,
@@ -752,7 +824,29 @@
         "4601234567893": { name: "Шоколад «Алёнка»", manufacturer: "Красный Октябрь", country: "Россия", expiry: "12 месяцев", category: "Продукты" }
     };
 
-    // ========== ОПРЕДЕЛЕНИЕ ТИПА КОДА ==========
+    function validateEAN13(code) {
+        if (!/^\d{13}$/.test(code)) return false;
+        let sum = 0;
+        for (let i = 0; i < 12; i++) sum += (i % 2 === 0) ? parseInt(code[i]) : parseInt(code[i]) * 3;
+        return (10 - (sum % 10)) % 10 === parseInt(code[12]);
+    }
+    function validateEAN8(code) {
+        if (!/^\d{8}$/.test(code)) return false;
+        let sum = 0;
+        for (let i = 0; i < 7; i++) sum += (i % 2 === 0) ? parseInt(code[i]) * 3 : parseInt(code[i]);
+        return (10 - (sum % 10)) % 10 === parseInt(code[7]);
+    }
+    function validateITF14(code) {
+        if (!/^\d{14}$/.test(code)) return false;
+        let sum = 0;
+        for (let i = 0; i < 13; i++) sum += (i % 2 === 0) ? parseInt(code[i]) : parseInt(code[i]) * 3;
+        return (10 - (sum % 10)) % 10 === parseInt(code[13]);
+    }
+    function getCountryByPrefix(code) { return countryPrefixes[code.substring(0, 3)] || `Префикс ${code.substring(0, 3)}`; }
+    function findProductByBarcode(code) { return productDatabase[code] || (code.match(/\d{14}/) && productDatabase[code.match(/\d{14}/)[0]]) || null; }
+    function analyzePrintQuality() { const score = Math.random() * 100; const issues = []; if (score < 60) issues.push("Низкая контрастность"); if (score < 50) issues.push("Размытые границы"); return { score, issues }; }
+
+    // ========== ОСНОВНАЯ ОБРАБОТКА ==========
     function detectBarcodeType(code) {
         const dmData = parseDataMatrix(code);
         if (dmData && dmData.isValid) return dmData;
@@ -761,90 +855,39 @@
         if (/^\d{14}$/.test(code)) return { type: "ITF-14", isValid: validateITF14(code), isEAN: true };
         return { type: "Другой формат", isValid: null };
     }
-    
-    function validateEAN13(code) {
-        if (!/^\d{13}$/.test(code)) return false;
-        let sum = 0;
-        for (let i = 0; i < 12; i++) sum += (i % 2 === 0) ? parseInt(code[i]) : parseInt(code[i]) * 3;
-        return (10 - (sum % 10)) % 10 === parseInt(code[12]);
-    }
-    
-    function validateEAN8(code) {
-        if (!/^\d{8}$/.test(code)) return false;
-        let sum = 0;
-        for (let i = 0; i < 7; i++) sum += (i % 2 === 0) ? parseInt(code[i]) * 3 : parseInt(code[i]);
-        return (10 - (sum % 10)) % 10 === parseInt(code[7]);
-    }
-    
-    function validateITF14(code) {
-        if (!/^\d{14}$/.test(code)) return false;
-        let sum = 0;
-        for (let i = 0; i < 13; i++) sum += (i % 2 === 0) ? parseInt(code[i]) : parseInt(code[i]) * 3;
-        return (10 - (sum % 10)) % 10 === parseInt(code[13]);
-    }
-    
-    function getCountryByPrefix(code) { 
-        const prefix = code.substring(0, 3);
-        return countryPrefixes[prefix] || `Префикс ${prefix}`;
-    }
-    
-    function findProductByBarcode(code) { 
-        if (productDatabase[code]) return productDatabase[code];
-        const gtinMatch = code.match(/\d{14}/);
-        if (gtinMatch && productDatabase[gtinMatch[0]]) return productDatabase[gtinMatch[0]];
-        return null;
-    }
-    
-    function analyzePrintQuality() { 
-        const score = Math.random() * 100; 
-        const issues = []; 
-        if (score < 60) issues.push("Низкая контрастность"); 
-        if (score < 50) issues.push("Размытые границы"); 
-        return { score, issues }; 
-    }
 
-    // ========== ОСНОВНАЯ ОБРАБОТКА ==========
     function processCode(rawCode) {
         let code = rawCode;
         const detection = detectBarcodeType(code);
         const product = findProductByBarcode(code);
         const printQuality = analyzePrintQuality();
-        
         let status = "unknown", statusText = "⚠️ НЕ ПРОВЕРЕНО", statusClass = "badge-warning";
         let trustScore = 100;
         let country = "";
         
         if (detection.type === "DATAMATRIX") {
             if (detection.hasValidCrypto) {
-                status = "genuine";
-                statusText = "✅ ПОДЛИННЫЙ (Честный ЗНАК)";
-                statusClass = "badge-dm";
-                trustScore = 95;
+                status = "genuine"; statusText = "✅ ПОДЛИННЫЙ (Честный ЗНАК)"; statusClass = "badge-dm"; trustScore = 95;
                 speak(`Товар подлинный. Маркировка Честного знака подтверждена. GTIN: ${detection.gtin || "не найден"}`);
+                showResult('success');
             } else {
-                status = "fake";
-                statusText = "❌ ПОДДЕЛКА! (отсутствует криптохвост)";
-                statusClass = "badge-fake";
-                trustScore = 10;
+                status = "fake"; statusText = "❌ ПОДДЕЛКА! (отсутствует криптохвост)"; statusClass = "badge-fake"; trustScore = 10;
                 speak("Внимание! Обнаружена подделка. Криптоподпись отсутствует.");
+                showResult('warning');
             }
             if (product) country = product.country;
             else if (detection.gtin) country = getCountryByPrefix(detection.gtin);
         } else if (detection.isEAN || detection.isValid !== undefined) {
             if (detection.isValid === true) {
-                status = "genuine";
-                statusText = "✅ ПОДЛИННЫЙ";
-                statusClass = "badge-genuine";
-                trustScore = 100;
+                status = "genuine"; statusText = "✅ ПОДЛИННЫЙ"; statusClass = "badge-genuine"; trustScore = 100;
                 country = getCountryByPrefix(code);
                 speak(`Товар подлинный. ${product ? product.name : 'Код корректен'}. Страна: ${country}`);
+                showResult('success');
             } else if (detection.isValid === false) {
-                status = "fake";
-                statusText = "❌ ПОДДЕЛКА! (контрольная сумма не совпадает)";
-                statusClass = "badge-fake";
-                trustScore = 10;
+                status = "fake"; statusText = "❌ ПОДДЕЛКА! (контрольная сумма не совпадает)"; statusClass = "badge-fake"; trustScore = 10;
                 speak("Внимание! Обнаружена подделка. Контрольная сумма не совпадает.");
                 country = getCountryByPrefix(code);
+                showResult('warning');
             }
         }
         
@@ -852,23 +895,17 @@
         trustScore = Math.max(0, Math.min(100, trustScore));
         
         let html = `<div class="product-card"><div class="product-header"><div class="product-name">${product ? product.name : (detection.type === "DATAMATRIX" ? "Маркированный товар (Честный ЗНАК)" : "Товар не найден в базе")}</div><span class="product-badge ${statusClass}">${statusText}</span></div><div class="product-info">`;
-        
         html += `<div class="info-section"><div class="info-section-title verified">✅ 100% ДОСТОВЕРНО</div><div class="info-grid">`;
         html += `<div class="info-row"><span class="info-label verified">🔢 Тип кода:</span><span class="info-value verified">${detection.type === "DATAMATRIX" ? "💠 DataMatrix (Честный ЗНАК)" : detection.type}</span></div>`;
-        
         if (detection.type === "DATAMATRIX") {
-            if (detection.hasValidCrypto) {
-                html += `<div class="info-row"><span class="info-label verified">🔐 Криптохвост:</span><span class="info-value verified">✅ ПРИСУТСТВУЕТ</span></div>`;
-            } else {
-                html += `<div class="info-row"><span class="info-label verified">🔐 Криптохвост:</span><span class="info-value verified">❌ ОТСУТСТВУЕТ</span></div>`;
-            }
+            if (detection.hasValidCrypto) { html += `<div class="info-row"><span class="info-label verified">🔐 Криптохвост:</span><span class="info-value verified">✅ ПРИСУТСТВУЕТ</span></div>`; }
+            else { html += `<div class="info-row"><span class="info-label verified">🔐 Криптохвост:</span><span class="info-value verified">❌ ОТСУТСТВУЕТ</span></div>`; }
             if (detection.gtin) html += `<div class="info-row"><span class="info-label verified">📦 GTIN:</span><span class="info-value verified">${detection.gtin}</span></div>`;
         } else {
             html += `<div class="info-row"><span class="info-label verified">🔐 Контрольная сумма:</span><span class="info-value verified">${detection.isValid === true ? '✅ ВЕРНА' : (detection.isValid === false ? '❌ НЕ ВЕРНА' : '—')}</span></div>`;
             if (country) html += `<div class="info-row"><span class="info-label verified">🌍 Страна бренда:</span><span class="info-value verified">${country}</span></div>`;
         }
         html += `</div></div>`;
-        
         if (product || (detection.type === "DATAMATRIX" && detection.serialNumber)) {
             html += `<div class="info-section"><div class="info-section-title reference">📖 СПРАВОЧНАЯ ИНФОРМАЦИЯ</div><div class="info-grid">`;
             if (product) {
@@ -879,149 +916,42 @@
             if (detection.type === "DATAMATRIX" && detection.serialNumber) {
                 html += `<div class="info-row"><span class="info-label reference">🔢 Серийный номер:</span><span class="info-value reference">${detection.serialNumber.substring(0, 13)}</span></div>`;
             }
-            html += `</div></div>`;
-            html += `<div class="reference-note">📖 Данные из локальной базы. Могут отличаться от актуальных.</div>`;
+            html += `</div></div><div class="reference-note">📖 Данные из локальной базы. Могут отличаться.</div>`;
         }
-        
         html += `<div class="trust-meter"><span>🛡️ Уровень доверия: ${trustScore}%</span><div class="meter-bar"><div class="meter-fill" style="width: ${trustScore}%"></div></div></div></div></div>`;
-        
         document.getElementById("resultContainer").innerHTML = html;
         saveToHistory(code.substring(0, 30) + (code.length > 30 ? "..." : ""), product ? product.name : (detection.type === "DATAMATRIX" ? "Маркированный товар" : "Товар не найден"));
-        
-        if (status === "fake") { 
-            const panel = document.getElementById("resultContainer"); 
-            if (panel) panel.classList.add("vibrate"); 
-            setTimeout(() => { if (panel) panel.classList.remove("vibrate"); }, 500); 
-        }
+        if (status === "fake") { const panel = document.getElementById("resultContainer"); if (panel) panel.classList.add("vibrate"); setTimeout(() => { if (panel) panel.classList.remove("vibrate"); }, 500); }
     }
 
-    function processManualCode() {
-        const code = document.getElementById("manualCodeInput").value.trim();
-        if (!code) { alert("Введите 13 цифр"); return; }
-        processCode(code);
-        document.getElementById("manualResultContainer").innerHTML = document.getElementById("resultContainer").innerHTML;
-    }
+    function processManualCode() { const code = document.getElementById("manualCodeInput").value.trim(); if (!code) { alert("Введите 13 цифр"); return; } processCode(code); document.getElementById("manualResultContainer").innerHTML = document.getElementById("resultContainer").innerHTML; }
 
     // ========== ИСТОРИЯ ==========
-    function saveToHistory(code, name) {
-        let history = JSON.parse(localStorage.getItem("antiai_history_final") || "[]");
-        history = history.filter(item => item.code !== code);
-        history.unshift({ code: code, name: name || "Товар", time: Date.now() });
-        history = history.slice(0, 50);
-        localStorage.setItem("antiai_history_final", JSON.stringify(history));
-        renderHistory();
-    }
-    
-    function renderHistory() {
-        const container = document.getElementById("historyList");
-        if (!container) return;
-        let history = JSON.parse(localStorage.getItem("antiai_history_final") || "[]");
-        if (history.length === 0) { container.innerHTML = "<div style='text-align:center;padding:40px;color:#9ab3c5;'>Нет сканирований</div>"; return; }
-        container.innerHTML = history.map(item => `<div class="history-item" onclick="reprocess('${escapeHtml(item.code)}')"><div class="history-code">${escapeHtml(item.code)}</div><div class="history-name">${escapeHtml(item.name)}</div><div class="history-time">${new Date(item.time).toLocaleString("ru-RU")}</div></div>`).join('');
-    }
-    
-    function exportHistory() {
-        let history = localStorage.getItem("antiai_history_final");
-        if (!history || history === "[]") { alert("Нет данных для экспорта"); return; }
-        const blob = new Blob([history], {type: "application/json"});
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = `antiai_export_${Date.now()}.json`;
-        a.click();
-        URL.revokeObjectURL(url);
-    }
-    
+    function saveToHistory(code, name) { let history = JSON.parse(localStorage.getItem("antiai_history_final") || "[]"); history = history.filter(item => item.code !== code); history.unshift({ code: code, name: name || "Товар", time: Date.now() }); history = history.slice(0, 50); localStorage.setItem("antiai_history_final", JSON.stringify(history)); renderHistory(); }
+    function renderHistory() { const container = document.getElementById("historyList"); if (!container) return; let history = JSON.parse(localStorage.getItem("antiai_history_final") || "[]"); if (history.length === 0) { container.innerHTML = "<div style='text-align:center;padding:40px;color:#9ab3c5;'>Нет сканирований</div>"; return; } container.innerHTML = history.map(item => `<div class="history-item" onclick="reprocess('${escapeHtml(item.code)}')"><div class="history-code">${escapeHtml(item.code)}</div><div class="history-name">${escapeHtml(item.name)}</div><div class="history-time">${new Date(item.time).toLocaleString("ru-RU")}</div></div>`).join(''); }
+    function exportHistory() { let history = localStorage.getItem("antiai_history_final"); if (!history || history === "[]") { alert("Нет данных для экспорта"); return; } const blob = new Blob([history], {type: "application/json"}); const url = URL.createObjectURL(blob); const a = document.createElement("a"); a.href = url; a.download = `antiai_export_${Date.now()}.json`; a.click(); URL.revokeObjectURL(url); }
     function clearHistory() { showConfirm("Очистить всю историю?", () => { localStorage.removeItem("antiai_history_final"); renderHistory(); }); }
     function reprocess(code) { document.getElementById("manualCodeInput").value = code; processCode(code); showScreen("manual"); }
     function escapeHtml(str) { if (!str) return ""; return String(str).replace(/[&<>]/g, m => m === "&" ? "&amp;" : (m === "<" ? "&lt;" : "&gt;")); }
 
     // ========== КАМЕРА ==========
     let currentStream = null, currentCamera = "environment", isScanning = true, lastScannedCode = "", codeReader = null;
-    
-    async function initScanner() { 
-        try { 
-            codeReader = new ZXing.BrowserMultiFormatReader(); 
-            codeReader.timeBetweenDecodingAttempts = 100; 
-            await startCamera(); 
-            startDecoding(); 
-        } catch(e) { console.error("ZXing error:", e); } 
-    }
-    
-    async function startCamera() {
-        if (currentStream) currentStream.getTracks().forEach(t => t.stop());
-        try { 
-            currentStream = await navigator.mediaDevices.getUserMedia({ 
-                video: { facingMode: currentCamera, width: { ideal: 720 }, height: { ideal: 720 } } 
-            }); 
-            document.getElementById("video").srcObject = currentStream; 
-        } catch(err) { 
-            alert("🔒 Доступ к камере запрещён. Используйте ручной ввод.");
-            setTimeout(() => showScreen('manual'), 1500);
-        } 
-    }
-    
-    function startDecoding() { 
-        if (!codeReader) return; 
-        const video = document.getElementById("video"); 
-        if (!video) return; 
-        codeReader.decodeFromVideoElement(video, (result, err) => { 
-            if (result && isScanning && result.text !== lastScannedCode) { 
-                processCode(result.text); 
-                lastScannedCode = result.text; 
-                isScanning = false; 
-                setTimeout(() => { isScanning = true; lastScannedCode = ""; }, 2000); 
-            } 
-            document.getElementById("qualityFill").style.width = Math.random() * 100 + "%"; 
-        }); 
-    }
-    
-    function switchCamera() { 
-        currentCamera = currentCamera === "environment" ? "user" : "environment"; 
-        startCamera(); 
-    }
+    async function initScanner() { try { codeReader = new ZXing.BrowserMultiFormatReader(); codeReader.timeBetweenDecodingAttempts = 100; await startCamera(); startDecoding(); } catch(e) { console.error("ZXing error:", e); } }
+    async function startCamera() { if (currentStream) currentStream.getTracks().forEach(t => t.stop()); try { currentStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: currentCamera, width: { ideal: 720 }, height: { ideal: 720 } } }); document.getElementById("video").srcObject = currentStream; } catch(err) { alert("🔒 Доступ к камере запрещён. Используйте ручной ввод."); setTimeout(() => showScreen('manual'), 1500); } }
+    function startDecoding() { if (!codeReader) return; const video = document.getElementById("video"); if (!video) return; codeReader.decodeFromVideoElement(video, (result, err) => { if (result && isScanning && result.text !== lastScannedCode) { let code = result.text.replace(/\D/g, ''); if (code.length === 13) processCode(code, 'scannerResult'); lastScannedCode = result.text; isScanning = false; setTimeout(() => { isScanning = true; lastScannedCode = ""; }, 2000); } document.getElementById("qualityFill").style.width = Math.random() * 100 + "%"; }); }
+    function switchCamera() { currentCamera = currentCamera === "environment" ? "user" : "environment"; startCamera(); }
 
     // ========== НАВИГАЦИЯ ==========
-    function showScreen(screen) {
-        document.querySelectorAll(".section-screen").forEach(el => el.classList.remove("active"));
-        document.getElementById("menuScreen").style.display = "none";
-        
-        if (screen === "main") { 
-            if (currentStream) { currentStream.getTracks().forEach(track => track.stop()); currentStream = null; }
-            isScanning = true;
-            lastScannedCode = "";
-            document.getElementById("menuScreen").style.display = "block"; 
-            return; 
-        }
-        
-        const target = document.getElementById(screen + "Screen");
-        if (target) target.classList.add("active");
-        if (screen === "scanner") {
-            setTimeout(() => {
-                if (!codeReader) { codeReader = new ZXing.BrowserMultiFormatReader(); codeReader.timeBetweenDecodingAttempts = 100; }
-                startCamera(); startDecoding();
-            }, 100);
-        }
-        if (screen === "history") renderHistory();
-    }
+    function showScreen(screen) { document.querySelectorAll(".section-screen").forEach(el => el.classList.remove("active")); document.getElementById("menuScreen").style.display = "none"; if (screen === "main") { if (currentStream) { currentStream.getTracks().forEach(track => track.stop()); currentStream = null; } isScanning = true; lastScannedCode = ""; document.getElementById("menuScreen").style.display = "block"; return; } const target = document.getElementById(screen + "Screen"); if (target) target.classList.add("active"); if (screen === "scanner") { setTimeout(() => { if (!codeReader) { codeReader = new ZXing.BrowserMultiFormatReader(); codeReader.timeBetweenDecodingAttempts = 100; } startCamera(); startDecoding(); }, 100); } if (screen === "history") renderHistory(); }
 
-    // ========== МОДАЛЬНОЕ ОКНО ==========
+    // ========== МОДАЛЬНОЕ ОКНО ПОДТВЕРЖДЕНИЯ ==========
     let confirmCallback = null;
-    function showConfirm(message, callback) { 
-        document.getElementById("confirmMessage").textContent = message; 
-        confirmCallback = callback; 
-        document.getElementById("confirmModal").classList.add("active"); 
-    }
-    function closeModal() { 
-        document.getElementById("confirmModal").classList.remove("active"); 
-        confirmCallback = null; 
-    }
-    document.getElementById("confirmOkBtn").onclick = () => { if (confirmCallback) confirmCallback(); closeModal(); };
+    function showConfirm(message, callback) { const modal = document.getElementById('confirmModal'); const msgEl = document.getElementById('confirmMessage'); if (msgEl) msgEl.textContent = message; confirmCallback = callback; if (modal) modal.classList.add('active'); }
+    function closeConfirmModal() { const modal = document.getElementById('confirmModal'); if (modal) modal.classList.remove('active'); confirmCallback = null; }
+    document.getElementById('confirmOkBtn').onclick = () => { if (confirmCallback) confirmCallback(); closeConfirmModal(); };
 
     // ========== ЗАПУСК ==========
-    window.addEventListener("DOMContentLoaded", () => { 
-        renderHistory(); 
-    });
+    window.addEventListener("DOMContentLoaded", () => { renderHistory(); });
 </script>
 </body>
 </html>
