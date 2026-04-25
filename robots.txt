@@ -1,0 +1,15 @@
+# robots.txt для Анти ИИ Штрих-код
+User-agent: *
+Allow: /
+
+# Запрещаем индексацию служебных частей (если бы они были отдельными URL)
+# Для SPA это не критично, но на всякий случай
+
+# Указываем Sitemap
+Sitemap: https://anti-ai-barcode.vercel.app/sitemap.xml
+
+# Хост (для поисковых систем, которые это поддерживают)
+Host: https://anti-ai-barcode.vercel.app
+
+# Задержка между запросами (для уважения к серверу)
+Crawl-delay: 1
