@@ -334,7 +334,17 @@
             25% { transform: translateX(-2px); }
             75% { transform: translateX(2px); }
         }
-        .scrollable { max-height: 500px; overflow-y: auto; }
+        
+        /* Обновлённый класс scrollable — скрываем скроллбар, но оставляем прокрутку */
+        .scrollable { 
+            max-height: 500px; 
+            overflow-y: auto; 
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE/Edge */
+        }
+        .scrollable::-webkit-scrollbar { 
+            display: none; /* Chrome, Safari, Opera */
+        }
     </style>
 </head>
 <body>
