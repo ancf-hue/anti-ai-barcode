@@ -7,14 +7,14 @@
     
     <!-- SEO Мета-теги -->
     <title>Анти ИИ Штрих-код | Проверка подлинности товаров</title>
-    <meta name="description" content="Анти ИИ Штрих-код — бесплатный офлайн-сканер для проверки подлинности товаров. Распознаёт EAN-13, DataMatrix (Честный ЗНАК). Защита от ИИ-подделок.">
-    <meta name="keywords" content="анти ии, штрих-код, проверка подлинности, сканер штрих-кодов, честный знак, datamatrix, ean-13">
-    <meta name="author" content="Dmytro Korobko">
+    <meta name="description" content="Анти ИИ Штрих-код — бесплатный офлайн-сканер для проверки подлинности товаров. Распознаёт EAN-13, DataMatrix (Честный ЗНАК). Новые категории с 1 мая 2026: радиоэлектроника, стройматериалы, кондитерские изделия.">
+    <meta name="keywords" content="анти ии, штрих-код, проверка подлинности, сканер штрих-кодов, честный знак, дататрикс, ean-13, радиоэлектроника, стройматериалы, кондитерские, маркировка 2026">
+    <meta name="author" content="Антон Анатольевич Кузнецов">
     <meta name="robots" content="index, follow">
     
     <!-- Open Graph -->
     <meta property="og:title" content="Анти ИИ Штрих-код | Защита от подделок">
-    <meta property="og:description" content="Бесплатный офлайн-сканер штрих-кодов. Проверка подлинности товаров, маркировка Честный ЗНАК.">
+    <meta property="og:description" content="Бесплатный офлайн-сканер штрих-кодов. Проверка подлинности товаров, маркировка Честный ЗНАК. Новые категории с 1 мая 2026.">
     <meta property="og:image" content="https://anti-ai-barcode.vercel.app/logo.jpeg">
     <meta property="og:url" content="https://anti-ai-barcode.vercel.app/">
     <meta property="og:type" content="website">
@@ -32,7 +32,7 @@
       "url": "https://anti-ai-barcode.vercel.app",
       "applicationCategory": "UtilityApplication",
       "operatingSystem": "All",
-      "abstract": "Бесплатный офлайн-сканер для проверки подлинности товаров.",
+      "abstract": "Бесплатный офлайн-сканер для проверки подлинности товаров с поддержкой новых категорий маркировки с 1 мая 2026.",
       "offers": {
         "@type": "Offer",
         "price": "0",
@@ -42,12 +42,7 @@
     </script>
     
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: #0a0a0a;
@@ -68,88 +63,48 @@
             display: flex;
             flex-direction: column;
         }
-        .app-content {
-            flex: 1;
-            overflow-y: auto;
-            overflow-x: hidden;
-            padding: 0;
-            position: relative;
-        }
+        .app-content { flex: 1; overflow-y: auto; overflow-x: hidden; padding: 0; position: relative; }
 
-        /* ЭКРАН ЗАГРУЗКИ С ВИДЕО */
         .loading-screen {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #0f1a24;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 200;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: #0f1a24; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; z-index: 200;
             transition: opacity 0.5s ease;
         }
-        .loading-screen.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-        .loading-video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+        .loading-screen.hidden { opacity: 0; pointer-events: none; }
+        .loading-video { width: 100%; height: 100%; object-fit: cover; }
         .sound-toggle {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            background: rgba(0,0,0,0.5);
-            border: 2px solid rgba(255,255,255,0.5);
-            border-radius: 50%;
-            width: 56px;
-            height: 56px;
-            font-size: 28px;
-            cursor: pointer;
-            z-index: 201;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            color: white;
+            position: absolute; top: 20px; left: 20px;
+            background: rgba(0,0,0,0.5); border: 2px solid rgba(255,255,255,0.5);
+            border-radius: 50%; width: 56px; height: 56px; font-size: 28px;
+            cursor: pointer; z-index: 201; display: flex; align-items: center;
+            justify-content: center; transition: all 0.3s ease; color: white;
         }
         .sound-toggle:active { transform: scale(0.9); }
 
-        /* Главное меню */
         .menu-screen { display: flex; flex-direction: column; height: 100%; padding: 20px 16px; }
         .menu-screen.hidden { display: none; }
         .app-header { text-align: center; padding: 10px 0 16px; cursor: pointer; }
-        .app-header h1 { font-size: 22px; font-weight: 800; background: linear-gradient(90deg, #6ba5d9, #6b9c7a); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .app-header h1 {
+            font-size: 22px; font-weight: 800;
+            background: linear-gradient(90deg, #6ba5d9, #6b9c7a);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
         .app-header img { width: 32px; height: 32px; border-radius: 8px; object-fit: cover; transition: transform 0.2s ease; }
         .app-header:active img { transform: scale(0.95); }
         .app-header p { color: #9ab3c5; font-size: 11px; margin-top: 4px; }
         .badge-new {
-            background: #ff4444;
-            color: white;
-            font-size: 9px;
-            padding: 2px 8px;
-            border-radius: 20px;
-            margin-left: 8px;
-            vertical-align: middle;
+            background: #ff4444; color: white; font-size: 9px;
+            padding: 2px 8px; border-radius: 20px; margin-left: 8px; vertical-align: middle;
         }
         .menu-grid { display: flex; flex-direction: column; gap: 12px; flex: 1; }
         
         .menu-btn {
             background: linear-gradient(145deg, rgba(40,55,70,0.95), rgba(25,35,45,0.9));
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(107,165,217,0.3);
-            border-radius: 20px;
-            padding: 16px 20px;
-            color: white;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            cursor: pointer;
+            backdrop-filter: blur(10px); border: 2px solid rgba(107,165,217,0.3);
+            border-radius: 20px; padding: 16px 20px; color: white;
+            display: flex; align-items: center; gap: 16px; cursor: pointer;
             transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
             box-shadow: 0 8px 0 rgba(0,0,0,0.3), 0 15px 20px rgba(0,0,0,0.4), inset 0 2px 0 rgba(255,255,255,0.1);
             transform: translateY(0);
@@ -160,15 +115,9 @@
             background: linear-gradient(145deg, rgba(25,35,45,0.95), rgba(40,55,70,0.9));
         }
         .menu-btn .icon { 
-            font-size: 32px; 
-            width: 48px; 
-            height: 48px; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            border-radius: 16px; 
-            flex-shrink: 0; 
-            background: rgba(107,165,217,0.2);
+            font-size: 32px; width: 48px; height: 48px; display: flex; 
+            align-items: center; justify-content: center; border-radius: 16px; 
+            flex-shrink: 0; background: rgba(107,165,217,0.2);
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
         .menu-btn .label { font-weight: 700; font-size: 16px; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
@@ -180,129 +129,69 @@
         }
 
         .section-screen {
-            display: none;
-            flex-direction: column;
-            height: 100%;
-            opacity: 0;
-            transform: translateY(10px);
+            display: none; flex-direction: column; height: 100%;
+            opacity: 0; transform: translateY(10px);
             transition: opacity 0.4s ease-out, transform 0.4s ease-out;
         }
-        .section-screen.active {
-            display: flex;
-            opacity: 1;
-            transform: translateY(0);
-        }
+        .section-screen.active { display: flex; opacity: 1; transform: translateY(0); }
         .screen-header {
-            padding: 14px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
+            padding: 14px; display: flex; align-items: center; gap: 12px;
             border-bottom: 1px solid rgba(255,255,255,0.06);
-            background: rgba(15,26,36,0.9);
-            backdrop-filter: blur(10px);
-            position: sticky;
-            top: 0;
-            z-index: 10;
+            background: rgba(15,26,36,0.9); backdrop-filter: blur(10px);
+            position: sticky; top: 0; z-index: 10;
         }
         .screen-back {
-            width: 36px;
-            height: 36px;
-            border: none;
-            border-radius: 10px;
-            background: rgba(25,35,45,0.85);
-            color: #e2e8f0;
-            font-size: 18px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
+            width: 36px; height: 36px; border: none; border-radius: 10px;
+            background: rgba(25,35,45,0.85); color: #e2e8f0; font-size: 18px;
+            cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
         }
         .screen-back:active { transform: scale(0.95); }
         .screen-title { font-size: 18px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
         .screen-title img { width: 24px; height: 24px; border-radius: 6px; }
         .screen-content { flex: 1; padding: 14px; overflow-y: auto; }
 
-        /* Сканер */
         .scanner-wrapper {
-            background: #000;
-            border-radius: 24px;
-            overflow: hidden;
-            position: relative;
-            aspect-ratio: 1 / 1;
-            margin-bottom: 16px;
+            background: #000; border-radius: 24px; overflow: hidden;
+            position: relative; aspect-ratio: 1 / 1; margin-bottom: 16px;
         }
-        #video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
+        #video { width: 100%; height: 100%; object-fit: cover; display: block; }
         .scan-frame {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 75%;
-            height: 40%;
-            border: 2px solid #6ba5d9;
-            border-radius: 20px;
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 75%; height: 40%; border: 2px solid #6ba5d9; border-radius: 20px;
             box-shadow: 0 0 0 9999px rgba(0,0,0,0.7);
         }
         .scan-line {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
+            position: absolute; top: 0; left: 0; right: 0; height: 2px;
             background: linear-gradient(90deg, transparent, #6ba5d9, #6b9c7a, #6ba5d9, transparent);
             animation: scanMove 2s ease-in-out infinite;
         }
         @keyframes scanMove {
-            0% { top: 0; opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { top: 100%; opacity: 0; }
+            0% { top: 0; opacity: 0; } 10% { opacity: 1; }
+            90% { opacity: 1; } 100% { top: 100%; opacity: 0; }
         }
         .quality-bar {
-            position: absolute;
-            bottom: 12px;
-            left: 12px;
-            right: 12px;
-            height: 3px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 3px;
-            overflow: hidden;
+            position: absolute; bottom: 12px; left: 12px; right: 12px;
+            height: 3px; background: rgba(255,255,255,0.2); border-radius: 3px; overflow: hidden;
         }
         .quality-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #c97b6b, #d9a86b, #6b9c7a); transition: width 0.1s ease; }
 
         .btn-group { display: flex; gap: 12px; margin: 16px 0; }
         .btn {
-            flex: 1;
-            padding: 14px;
-            border: none;
-            border-radius: 30px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
+            flex: 1; padding: 14px; border: none; border-radius: 30px;
+            font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s;
         }
         .btn-primary { background: linear-gradient(135deg, #6ba5d9, #4a7a9e); color: white; }
         .btn-secondary { background: rgba(255,255,255,0.1); color: white; }
         .btn:active { transform: scale(0.96); }
 
         .product-card {
-            background: rgba(25,35,45,0.85);
-            backdrop-filter: blur(10px);
-            border-radius: 24px;
-            overflow: hidden;
-            margin-top: 16px;
+            background: rgba(25,35,45,0.85); backdrop-filter: blur(10px);
+            border-radius: 24px; overflow: hidden; margin-top: 16px;
             border: 1px solid rgba(107,165,217,0.2);
         }
         .product-header {
             background: linear-gradient(135deg, rgba(107,165,217,0.2), rgba(107,156,122,0.1));
-            padding: 14px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 14px; border-bottom: 1px solid rgba(255,255,255,0.1);
         }
         .product-name { font-size: 16px; font-weight: 700; color: white; margin-bottom: 6px; }
         .product-badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 10px; font-weight: 600; }
@@ -331,25 +220,16 @@
         .warning-text { color: #d9a86b; font-size: 11px; margin-top: 8px; padding: 8px; background: rgba(217,168,107,0.1); border-radius: 12px; }
         .reference-note { color: #9ab3c5; font-size: 10px; margin-top: 8px; padding: 6px; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); }
         .legal-note {
-            background: rgba(201,123,107,0.1);
-            border-left: 3px solid #c97b6b;
-            padding: 10px;
-            font-size: 10px;
-            color: #9ab3c5;
-            margin-top: 12px;
-            border-radius: 8px;
-            text-align: center;
+            background: rgba(201,123,107,0.1); border-left: 3px solid #c97b6b;
+            padding: 10px; font-size: 10px; color: #9ab3c5;
+            margin-top: 12px; border-radius: 8px; text-align: center;
         }
 
         .history-list { max-height: 400px; overflow-y: auto; }
         .history-item {
-            background: rgba(25,35,45,0.85);
-            backdrop-filter: blur(10px);
-            padding: 12px;
-            border-radius: 16px;
-            margin-bottom: 8px;
-            cursor: pointer;
-            transition: all 0.2s ease;
+            background: rgba(25,35,45,0.85); backdrop-filter: blur(10px);
+            padding: 12px; border-radius: 16px; margin-bottom: 8px;
+            cursor: pointer; transition: all 0.2s ease;
             border: 1px solid rgba(255,255,255,0.05);
         }
         .history-item:active { transform: scale(0.98); background: rgba(107,165,217,0.2); }
@@ -358,24 +238,15 @@
         .history-time { font-size: 10px; color: #9ab3c5; margin-top: 4px; }
 
         .manual-input {
-            background: rgba(25,35,45,0.85);
-            border: 1px solid rgba(107,165,217,0.3);
-            border-radius: 30px;
-            padding: 14px;
-            width: 100%;
-            color: white;
-            font-family: monospace;
-            font-size: 13px;
-            text-align: center;
+            background: rgba(25,35,45,0.85); border: 1px solid rgba(107,165,217,0.3);
+            border-radius: 30px; padding: 14px; width: 100%; color: white;
+            font-family: monospace; font-size: 13px; text-align: center;
         }
         .manual-input:focus { outline: none; border-color: #6ba5d9; }
 
         .instruction-card {
-            background: rgba(25,35,45,0.85);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 16px;
-            margin-bottom: 12px;
+            background: rgba(25,35,45,0.85); backdrop-filter: blur(10px);
+            border-radius: 20px; padding: 16px; margin-bottom: 12px;
             border: 1px solid rgba(255,255,255,0.05);
         }
         .instruction-card h3 { font-size: 14px; color: #6ba5d9; margin-bottom: 8px; }
@@ -383,11 +254,8 @@
 
         .support-card {
             background: linear-gradient(135deg, rgba(107,165,217,0.1), rgba(107,156,122,0.05));
-            border: 1px solid rgba(107,165,217,0.2);
-            border-radius: 20px;
-            padding: 16px;
-            text-align: center;
-            margin-bottom: 12px;
+            border: 1px solid rgba(107,165,217,0.2); border-radius: 20px;
+            padding: 16px; text-align: center; margin-bottom: 12px;
         }
         .support-phone { font-size: 20px; font-weight: 800; color: #6b9c7a; letter-spacing: 1px; margin-bottom: 12px; }
         .copy-btn { background: #6b9c7a; border: none; border-radius: 60px; padding: 10px 20px; color: white; font-weight: 700; cursor: pointer; width: 100%; transition: all 0.2s ease; font-size: 14px; }
@@ -395,164 +263,69 @@
 
         .projects-grid { display: flex; flex-direction: column; gap: 10px; margin-top: 12px; }
         .project-card {
-            background: rgba(25,35,45,0.85);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 14px;
-            padding: 10px 14px;
-            text-decoration: none;
-            color: #e2e8f0;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transition: all 0.3s ease;
+            background: rgba(25,35,45,0.85); backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.06); border-radius: 14px;
+            padding: 10px 14px; text-decoration: none; color: #e2e8f0;
+            display: flex; align-items: center; gap: 10px; transition: all 0.3s ease;
         }
         .project-card:active { transform: scale(0.98); border-color: #6ba5d9; }
         .project-card .icon { font-size: 22px; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; background: rgba(107,165,217,0.15); border-radius: 10px; }
         .project-card .title { font-weight: 600; font-size: 13px; }
         .project-card .desc { font-size: 10px; color: #9ab3c5; }
 
-        /* КНОПКА ЗВУКА — ВНУТРИ .app, ПРАВЫЙ НИЖНИЙ УГОЛ */
         .voice-btn {
-            position: absolute;
-            bottom: 20px;
-            right: 20px;
-            width: 52px;
-            height: 52px;
-            border-radius: 50%;
+            position: absolute; bottom: 20px; right: 20px;
+            width: 52px; height: 52px; border-radius: 50%;
             background: linear-gradient(145deg, #6ba5d9, #4a7a9e);
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-            z-index: 100;
-            color: white;
+            border: none; font-size: 24px; cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3); z-index: 100; color: white;
         }
         .voice-btn:active { transform: scale(0.95); }
 
-        /* МОДАЛЬНОЕ ОКНО РЕЗУЛЬТАТА — ФОРМАТ 9:16, ПО ЦЕНТРУ */
         .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.85);
-            backdrop-filter: blur(8px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            transition: opacity 0.3s ease;
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.85); backdrop-filter: blur(8px);
+            display: flex; align-items: center; justify-content: center;
+            z-index: 1000; transition: opacity 0.3s ease;
         }
-        .modal-overlay.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
+        .modal-overlay.hidden { opacity: 0; pointer-events: none; }
         .modal-content {
             background: linear-gradient(145deg, #1a2a3a, #0f1a24);
-            width: 85%;
-            max-width: 320px;
-            padding: 24px 20px;
-            border-radius: 28px;
-            border: 1px solid rgba(255,255,255,0.1);
-            text-align: center;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-            transform: scale(0.9);
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            width: 85%; max-width: 320px; padding: 24px 20px;
+            border-radius: 28px; border: 1px solid rgba(255,255,255,0.1);
+            text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            transform: scale(0.9); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .modal-overlay:not(.hidden) .modal-content {
-            transform: scale(1);
-        }
-        .modal-icon {
-            font-size: 48px;
-            margin-bottom: 16px;
-        }
-        .modal-title {
-            color: white;
-            font-size: 20px;
-            margin-bottom: 10px;
-            font-weight: 700;
-        }
-        .modal-desc {
-            color: #9ab3c5;
-            font-size: 14px;
-            margin-bottom: 24px;
-            line-height: 1.4;
-        }
+        .modal-overlay:not(.hidden) .modal-content { transform: scale(1); }
+        .modal-icon { font-size: 48px; margin-bottom: 16px; }
+        .modal-title { color: white; font-size: 20px; margin-bottom: 10px; font-weight: 700; }
+        .modal-desc { color: #9ab3c5; font-size: 14px; margin-bottom: 24px; line-height: 1.4; }
         .modal-btn {
-            background: #6ba5d9;
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 30px;
-            font-weight: 700;
-            cursor: pointer;
-            width: 100%;
-            font-size: 14px;
+            background: #6ba5d9; color: white; border: none;
+            padding: 12px 30px; border-radius: 30px; font-weight: 700;
+            cursor: pointer; width: 100%; font-size: 14px;
         }
-        .modal-btn:active {
-            transform: scale(0.96);
-        }
+        .modal-btn:active { transform: scale(0.96); }
 
-        /* МОДАЛЬНОЕ ОКНО ПОДТВЕРЖДЕНИЯ — ПО ЦЕНТРУ */
         .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.95);
-            z-index: 2000;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
+            display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.95); z-index: 2000;
+            align-items: center; justify-content: center; padding: 20px;
         }
-        .modal.active {
-            display: flex;
-        }
+        .modal.active { display: flex; }
         .modal .modal-content {
-            background: #1a2a3a;
-            border-radius: 28px;
-            padding: 20px;
-            width: 100%;
-            max-width: 300px;
-            border: 1px solid #6ba5d9;
-            text-align: center;
+            background: #1a2a3a; border-radius: 28px; padding: 20px;
+            width: 100%; max-width: 300px; border: 1px solid #6ba5d9; text-align: center;
         }
-        .modal .modal-content h3 {
-            color: white;
-            text-align: center;
-            margin-bottom: 16px;
-        }
-        .modal .modal-content p {
-            color: #9ab3c5;
-            text-align: center;
-            margin: 16px 0;
-        }
-        .modal-buttons {
-            display: flex;
-            gap: 10px;
-            margin-top: 10px;
-        }
+        .modal .modal-content h3 { color: white; text-align: center; margin-bottom: 16px; }
+        .modal .modal-content p { color: #9ab3c5; text-align: center; margin: 16px 0; }
+        .modal-buttons { display: flex; gap: 10px; margin-top: 10px; }
         .modal-buttons button {
-            flex: 1;
-            padding: 12px;
-            border: none;
-            border-radius: 30px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
+            flex: 1; padding: 12px; border: none; border-radius: 30px;
+            font-size: 14px; font-weight: 600; cursor: pointer;
         }
-        .modal-buttons button:first-child {
-            background: #333;
-            color: white;
-        }
-        .modal-buttons button:last-child {
-            background: #c97b6b;
-            color: white;
-        }
+        .modal-buttons button:first-child { background: #333; color: white; }
+        .modal-buttons button:last-child { background: #c97b6b; color: white; }
 
         .hidden { display: none; }
         .vibrate { animation: vibrate 0.1s ease-in-out 3; }
@@ -566,26 +339,24 @@
 </head>
 <body>
 <div class="app">
-    <!-- ЭКРАН ЗАГРУЗКИ С ВИДЕО -->
     <div class="loading-screen" id="loadingScreen">
         <button class="sound-toggle" id="soundBtn">🔇</button>
         <video src="cube.mp4" muted playsinline preload="auto" class="loading-video" id="loadingVideo" loop></video>
     </div>
 
     <div class="app-content" id="appContent" style="display: none;">
-        <!-- ГЛАВНОЕ МЕНЮ -->
         <div class="menu-screen" id="menuScreen">
             <div class="app-header" id="logoHeader">
                 <h1>
                     <img src="logo.jpeg" alt="Логотип Анти ИИ Штрих-код">
                     Анти ИИ Штрих-код
-                    <span class="badge-new">100% достоверно</span>
+                    <span class="badge-new">Обновлено 01.05.2026</span>
                 </h1>
-                <p>EAN-13 • DataMatrix • Маркировка • Офлайн</p>
+                <p>EAN-13 • DataMatrix • Маркировка • Офлайн • Новые категории</p>
             </div>
             <div class="menu-grid">
                 <div class="menu-btn emergency" onclick="showScreen('scanner')"><div class="icon">📷</div><div><div class="label">Сканер</div><div class="desc">Наведи на штрих-код</div></div></div>
-                <div class="menu-btn" onclick="showScreen('manual')"><div class="icon">⌨️</div><div><div class="label">Ручной ввод</div><div class="desc">Введи 13 цифр</div></div></div>
+                <div class="menu-btn" onclick="showScreen('manual')"><div class="icon">⌨️</div><div><div class="label">Ручной ввод</div><div class="desc">Введи 8-14 цифр</div></div></div>
                 <div class="menu-btn" onclick="showScreen('history')"><div class="icon">📜</div><div><div class="label">История</div><div class="desc">Последние проверки</div></div></div>
                 <div class="menu-btn" onclick="showScreen('instruction')"><div class="icon">📖</div><div><div class="label">О проекте</div><div class="desc">Инструкция</div></div></div>
                 <div class="menu-btn" onclick="showScreen('support')"><div class="icon">💝</div><div><div class="label">Поддержать проект</div><div class="desc">Помочь развитию</div></div></div>
@@ -593,7 +364,6 @@
             </div>
         </div>
 
-        <!-- ЭКРАН ПОДДЕРЖКИ -->
         <div class="section-screen" id="supportScreen">
             <div class="screen-header"><button class="screen-back" onclick="showScreen('main')">←</button><div class="screen-title"><img src="logo.jpeg" alt="Анти ИИ Штрих-код">💝 Поддержать проект</div></div>
             <div class="screen-content scrollable">
@@ -601,24 +371,23 @@
                 <div class="instruction-card"><h3>Как перевести</h3><p>1. Открой банк<br>2. Платежи → По номеру телефона<br>3. Введи номер: <strong>8-920-227-56-76</strong><br>4. Сумма любая ❤️</p></div>
                 <div class="instruction-card"><h3>🚀 Наши проекты</h3>
                     <div class="projects-grid">
-                        <a href="https://anti-ai-shield.vercel.app/" target="_blank" class="project-card"><div class="icon">🛡️</div><div class="content"><div class="title">Анти-ИИ Щит</div><div class="desc">Защита от телефонных мошенников</div></div><div class="arrow">→</div></a>
-                        <a href="https://anti-bullying-app-one.vercel.app/" target="_blank" class="project-card"><div class="icon">👥</div><div class="content"><div class="title">Анти-Буллинг</div><div class="desc">Защита от школьного буллинга</div></div><div class="arrow">→</div></a>
-                        <a href="https://anti-ai-animals.vercel.app/" target="_blank" class="project-card"><div class="icon">🐾</div><div class="content"><div class="title">Животные поют</div><div class="desc">ИИ-музыка с животными</div></div><div class="arrow">→</div></a>
-                        <a href="https://anti-ai-stress.vercel.app/" target="_blank" class="project-card"><div class="icon">🧘</div><div class="content"><div class="title">Анти-ИИ Стресс</div><div class="desc">Управление гневом и эмоциями</div></div><div class="arrow">→</div></a>
-                        <a href="https://rutube.ru/channel/24404224/" target="_blank" class="project-card"><div class="icon">🎵</div><div class="content"><div class="title">Волшебство</div><div class="desc">Добрая музыка для детей и взрослых</div></div><div class="arrow">→</div></a>
+                        <a href="https://anti-ai-shield.vercel.app/" target="_blank" class="project-card"><div class="icon">🛡️</div><div><div class="title">Анти-ИИ Щит</div><div class="desc">Защита от телефонных мошенников</div></div><div class="arrow">→</div></a>
+                        <a href="https://anti-bullying-app-one.vercel.app/" target="_blank" class="project-card"><div class="icon">👥</div><div><div class="title">Анти-Буллинг</div><div class="desc">Защита от школьного буллинга</div></div><div class="arrow">→</div></a>
+                        <a href="https://anti-ai-animals.vercel.app/" target="_blank" class="project-card"><div class="icon">🐾</div><div><div class="title">Животные поют</div><div class="desc">ИИ-музыка с животными</div></div><div class="arrow">→</div></a>
+                        <a href="https://anti-ai-stress.vercel.app/" target="_blank" class="project-card"><div class="icon">🧘</div><div><div class="title">Анти-ИИ Стресс</div><div class="desc">Управление гневом и эмоциями</div></div><div class="arrow">→</div></a>
+                        <a href="https://rutube.ru/channel/24404224/" target="_blank" class="project-card"><div class="icon">🎵</div><div><div class="title">Волшебство</div><div class="desc">Добрая музыка для детей и взрослых</div></div><div class="arrow">→</div></a>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- ЭКРАН ИНСТРУКЦИИ -->
         <div class="section-screen" id="instructionScreen">
             <div class="screen-header"><button class="screen-back" onclick="showScreen('main')">←</button><div class="screen-title"><img src="logo.jpeg" alt="Анти ИИ Штрих-код">📖 О проекте</div></div>
             <div class="screen-content scrollable">
                 <article style="color: #9ab3c5; line-height: 1.6; padding: 10px; font-size: 14px;">
                     <h2 style="color: #6ba5d9; font-size: 20px; margin-bottom: 12px; font-weight: 700;">Защита от ИИ-подделок</h2>
-                    <p style="margin-bottom: 15px;"><strong>Анти ИИ Штрих-код</strong> — это первый мобильный сервис для верификации товаров, разработанный специально для борьбы с визуальными манипуляциями, созданными искусственным интеллектом.</p>
-                    <div style="background: rgba(107,165,217,0.1); border-left: 3px solid #6ba5d9; padding: 12px; border-radius: 8px; margin-bottom: 15px;"><p style="font-size: 13px; color: #fff;">🎯 Наша миссия: обеспечить 100% уверенность в подлинности каждой покупки.</p></div>
+                    <p style="margin-bottom: 15px;"><strong>Анти ИИ Штрих-код</strong> — сервис для верификации товаров. <strong>С 1 мая 2026</strong> добавлена поддержка: радиоэлектроника, стройматериалы, кондитерские изделия.</p>
+                    <div style="background: rgba(107,165,217,0.1); border-left: 3px solid #6ba5d9; padding: 12px; border-radius: 8px; margin-bottom: 15px;"><p style="font-size: 13px; color: #fff;">🎯 Миссия: 100% уверенность в подлинности каждой покупки.</p></div>
                     <h3 style="color: #6b9c7a; font-size: 16px; margin: 20px 0 10px;">Как это работает?</h3>
                     <ul style="list-style: none; padding: 0;">
                         <li style="margin-bottom: 10px; display: flex; align-items: start; gap: 8px;"><span>🛡️</span><span><strong>Анализ структуры:</strong> Проверка геометрии кода на микро-дефекты ИИ.</span></li>
@@ -628,14 +397,13 @@
                     <p style="margin-top: 20px; font-size: 12px; opacity: 0.8; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">🔍 Полностью бесплатно, без интернета, без регистрации.</p>
                 </article>
                 <div class="instruction-card"><h3>📷 Как пользоваться</h3><p>Наведи камеру на штрих-код или DataMatrix. Результат озвучивается.</p></div>
-                <div class="instruction-card"><h3>🔢 EAN-13</h3><p>Первые 3 цифры 460-469 — Россия. Контрольная сумма — последняя цифра.</p></div>
-                <div class="instruction-card"><h3>💠 Честный ЗНАК (DataMatrix)</h3><p>Код на одежде, обуви, лекарствах. Криптохвост = подлинность.</p></div>
+                <div class="instruction-card"><h3>🔢 EAN-13 / EAN-8 / ITF-14</h3><p>Первые 3 цифры 460-469 — Россия. Контрольная сумма — последняя цифра.</p></div>
+                <div class="instruction-card"><h3>💠 Честный ЗНАК (DataMatrix)</h3><p>Код на одежде, обуви, лекарствах, радиоэлектронике, стройматериалах, кондитерских. Криптохвост = подлинность.</p></div>
                 <div class="instruction-card"><h3>🛡️ Достоверность</h3><p><span style="color:#6b9c7a;">✅ 100% достоверно:</span> контрольная сумма, страна, тип кода.<br><span style="color:#9ab3c5;">📖 Справочно:</span> название, производитель, срок годности.</p></div>
                 <div class="legal-note">⚠️ Приложение носит познавательный характер.<br>Разработчик не несёт ответственности.<br>Работает офлайн, не собирает данные.</div>
             </div>
         </div>
 
-        <!-- ЭКРАН СКАНЕРА -->
         <div class="section-screen" id="scannerScreen">
             <div class="screen-header"><button class="screen-back" onclick="showScreen('main')">←</button><div class="screen-title"><img src="logo.jpeg" alt="Анти ИИ Штрих-код">📷 Сканер</div></div>
             <div class="screen-content">
@@ -645,17 +413,15 @@
             </div>
         </div>
 
-        <!-- ЭКРАН РУЧНОГО ВВОДА -->
         <div class="section-screen" id="manualScreen">
             <div class="screen-header"><button class="screen-back" onclick="showScreen('main')">←</button><div class="screen-title"><img src="logo.jpeg" alt="Анти ИИ Штрих-код">⌨️ Ручной ввод</div></div>
             <div class="screen-content">
-                <input type="text" id="manualCodeInput" class="manual-input" placeholder="Введите 13 цифр" maxlength="13" inputmode="numeric">
+                <input type="text" id="manualCodeInput" class="manual-input" placeholder="Введите 8-14 цифр" maxlength="14" inputmode="numeric">
                 <div class="btn-group"><button class="btn btn-primary" onclick="processManualCode()">🔍 Проверить</button></div>
                 <div id="manualResultContainer"></div>
             </div>
         </div>
 
-        <!-- ЭКРАН ИСТОРИИ -->
         <div class="section-screen" id="historyScreen">
             <div class="screen-header"><button class="screen-back" onclick="showScreen('main')">←</button><div class="screen-title"><img src="logo.jpeg" alt="Анти ИИ Штрих-код">📜 История</div></div>
             <div class="screen-content">
@@ -665,10 +431,8 @@
         </div>
     </div>
 
-    <!-- КНОПКА ЗВУКА -->
     <button class="voice-btn" id="voiceBtn" onclick="toggleSpeech()">🔊</button>
 
-    <!-- МОДАЛЬНОЕ ОКНО РЕЗУЛЬТАТА -->
     <div id="result-modal" class="modal-overlay hidden">
         <div class="modal-content">
             <div id="modal-icon" class="modal-icon"></div>
@@ -678,7 +442,6 @@
         </div>
     </div>
 
-    <!-- МОДАЛЬНОЕ ОКНО ПОДТВЕРЖДЕНИЯ -->
     <div class="modal" id="confirmModal">
         <div class="modal-content">
             <h3>⚠️ Подтверждение</h3>
@@ -693,7 +456,7 @@
 
 <script src="https://unpkg.com/@zxing/library@0.19.1/umd/index.js"></script>
 <script>
-    // ========== ВИДЕО ЗАГРУЗКИ ==========
+    // ========== ЗАГРУЗКА ==========
     const loadingScreen = document.getElementById('loadingScreen');
     const loadingVideo = document.getElementById('loadingVideo');
     const soundBtn = document.getElementById('soundBtn');
@@ -719,26 +482,25 @@
     setTimeout(() => { if (!actionTaken) startVideo(false); }, 2000);
     loadingVideo.load();
 
-    // ========== КОПИРОВАНИЕ НОМЕРА ==========
-    function copyPhoneNumber() { navigator.clipboard.writeText("8-920-227-56-76"); alert("📋 Номер скопирован! Спасибо ❤️"); }
+    function copyPhoneNumber() { 
+        navigator.clipboard.writeText("8-920-227-56-76"); 
+        alert("📋 Номер скопирован! Спасибо ❤️"); 
+    }
 
-    // ========== МОДАЛЬНОЕ ОКНО РЕЗУЛЬТАТА ==========
+    // ========== МОДАЛКА РЕЗУЛЬТАТА ==========
     function showResult(status) {
         const modal = document.getElementById('result-modal');
         const title = document.getElementById('modal-title');
         const desc = document.getElementById('modal-desc');
         const icon = document.getElementById('modal-icon');
         if (status === 'success') {
-            icon.innerText = '✅';
-            title.innerText = 'Подлинность подтверждена';
+            icon.innerText = '✅'; title.innerText = 'Подлинность подтверждена';
             desc.innerText = 'Штрих-код прошел проверку. Признаков ИИ-манипуляций не обнаружено. Товар оригинальный.';
         } else if (status === 'warning') {
-            icon.innerText = '⚠️';
-            title.innerText = 'Подозрение на ИИ';
+            icon.innerText = '⚠️'; title.innerText = 'Подозрение на ИИ';
             desc.innerText = 'Обнаружены аномалии в структуре кода. Возможна подделка! Будьте осторожны.';
         } else {
-            icon.innerText = '❌';
-            title.innerText = 'Ошибка чтения';
+            icon.innerText = '❌'; title.innerText = 'Ошибка чтения';
             desc.innerText = 'Не удалось распознать код. Убедитесь, что камера сфокусирована.';
         }
         modal.classList.remove('hidden');
@@ -746,8 +508,7 @@
     function closeModal() { document.getElementById('result-modal').classList.add('hidden'); }
 
     // ========== ГОЛОС ==========
-    let speechEnabled = true;
-    let bestVoice = null;
+    let speechEnabled = true, bestVoice = null;
     function preprocessText(text) {
         let result = text;
         result = result.replace(/(\d+)\s*кг/g, '$1 килограммов');
@@ -771,12 +532,10 @@
     }
     function loadVoices() { bestVoice = findBestMaleVoice(); }
     function speak(text) {
-        if (!speechEnabled) return;
+        if (!speechEnabled || !('speechSynthesis' in window)) return;
         const processedText = preprocessText(text);
         const utterance = new SpeechSynthesisUtterance(processedText);
-        utterance.lang = 'ru-RU';
-        utterance.rate = 0.85;
-        utterance.pitch = 0.7;
+        utterance.lang = 'ru-RU'; utterance.rate = 0.85; utterance.pitch = 0.7;
         if (bestVoice) utterance.voice = bestVoice;
         window.speechSynthesis.cancel();
         window.speechSynthesis.speak(utterance);
@@ -800,9 +559,10 @@
                 isValid: true, type: 'DATAMATRIX',
                 gtin: gtinMatch ? gtinMatch[1] : null,
                 serialNumber: serialMatch ? serialMatch[1] : null,
+                serialValid: serialMatch ? serialMatch[1].length >= 13 : false,
                 verificationKey: keyMatch ? keyMatch[1] : null,
                 cryptoHash: cryptoMatch ? cryptoMatch[1] : null,
-                hasValidCrypto: cryptoMatch ? cryptoMatch[1].length >= 44 : false
+                hasValidCrypto: cryptoMatch ? (cryptoMatch[1].length === 44 || cryptoMatch[1].length === 88) : false
             };
         }
         return null;
@@ -811,9 +571,14 @@
     // ========== ПРЕФИКСЫ СТРАН ==========
     const countryPrefixes = {
         '460':'Россия','461':'Россия','462':'Россия','463':'Россия','464':'Россия',
-        '465':'Россия','466':'Россия','467':'Россия','468':'Россия','469':'Россия',
+        '465':'Россия','466':'Россия','467':'Казахстан','468':'Узбекистан','469':'Кыргызстан',
         '481':'Беларусь','482':'Украина','484':'Молдова','485':'Армения','486':'Грузия',
-        '487':'Казахстан','400':'Германия','690':'Китай','840':'США','490':'Япония','880':'Корея'
+        '487':'Казахстан','400':'Германия','401':'Германия','402':'Германия',
+        '690':'Китай','691':'Китай','692':'Китай','693':'Китай','694':'Китай',
+        '840':'США','490':'Япония','880':'Корея','590':'Польша','594':'Румыния',
+        '599':'Венгрия','869':'Турция','885':'Таиланд','890':'Индия','871':'Нидерланды',
+        '500':'Великобритания','300':'Франция','301':'Франция','302':'Франция',
+        '800':'Италия','801':'Италия','802':'Италия','841':'Испания','842':'Испания'
     };
 
     // ========== БАЗА ТОВАРОВ ==========
@@ -821,7 +586,25 @@
         "4601234567890": { name: "Аспирин-Кардио 100 мг", manufacturer: "Байер АГ", country: "Германия", expiry: "2 года", category: "Лекарства" },
         "4601234567891": { name: "Но-шпа 40 мг", manufacturer: "Хиноин", country: "Венгрия", expiry: "3 года", category: "Лекарства" },
         "4601234567892": { name: "Молоко «Домик в деревне»", manufacturer: "Вимм-Билль-Данн", country: "Россия", expiry: "14 дней", category: "Продукты" },
-        "4601234567893": { name: "Шоколад «Алёнка»", manufacturer: "Красный Октябрь", country: "Россия", expiry: "12 месяцев", category: "Продукты" }
+        "4601234567893": { name: "Шоколад «Алёнка»", manufacturer: "Красный Октябрь", country: "Россия", expiry: "12 месяцев", category: "Продукты" },
+        "4607771000014": { name: "Светодиодная лампа 10Вт", manufacturer: "Gauss", country: "Россия", expiry: "3 года", category: "Радиоэлектроника" },
+        "4607771000021": { name: "USB-зарядка 20Вт", manufacturer: "Xiaomi", country: "Китай", expiry: "2 года", category: "Радиоэлектроника" },
+        "4607771000038": { name: "Розетка с заземлением", manufacturer: "Legrand", country: "Франция", expiry: "10 лет", category: "Радиоэлектроника" },
+        "4607771000045": { name: "Смартфон бюджетный", manufacturer: "Realme", country: "Китай", expiry: "1 год гарантия", category: "Радиоэлектроника" },
+        "4607771000052": { name: "Ноутбук 15.6\"", manufacturer: "Honor", country: "Китай", expiry: "2 года гарантия", category: "Радиоэлектроника" },
+        "4607771000069": { name: "Наушники беспроводные", manufacturer: "JBL", country: "США", expiry: "1 год гарантия", category: "Радиоэлектроника" },
+        "4608882000017": { name: "Цемент М500 50кг", manufacturer: "Евроцемент", country: "Россия", expiry: "6 месяцев", category: "Стройматериалы" },
+        "4608882000024": { name: "Шпатлёвка финишная 5кг", manufacturer: "Knauf", country: "Германия", expiry: "12 месяцев", category: "Стройматериалы" },
+        "4608882000031": { name: "Герметик силиконовый", manufacturer: "Момент", country: "Россия", expiry: "18 месяцев", category: "Стройматериалы" },
+        "4608882000048": { name: "Монтажная пена 750мл", manufacturer: "Tytan", country: "Польша", expiry: "12 месяцев", category: "Стройматериалы" },
+        "4608882000055": { name: "Гипсовая смесь 30кг", manufacturer: "Volma", country: "Россия", expiry: "6 месяцев", category: "Стройматериалы" },
+        "4608882000062": { name: "Клей для плитки 25кг", manufacturer: "Ceresit", country: "Германия", expiry: "12 месяцев", category: "Стройматериалы" },
+        "4609993000010": { name: "Торт «Наполеон» 500г", manufacturer: "Кондитерский дом", country: "Россия", expiry: "72 часа", category: "Кондитерские" },
+        "4609993000027": { name: "Пирожное «Картошка» 4шт", manufacturer: "Сладкий мир", country: "Россия", expiry: "48 часов", category: "Кондитерские" },
+        "4609993000034": { name: "Круассан с шоколадом", manufacturer: "Пекарня №1", country: "Россия", expiry: "24 часа", category: "Кондитерские" },
+        "4609993000041": { name: "Рулет бисквитный 300г", manufacturer: "Лакомка", country: "Россия", expiry: "5 суток", category: "Кондитерские" },
+        "4609993000058": { name: "Эклер заварной 3шт", manufacturer: "Сладости+", country: "Россия", expiry: "48 часов", category: "Кондитерские" },
+        "4609993000065": { name: "Маффин шоколадный 6шт", manufacturer: "Выпечка.ру", country: "Россия", expiry: "5 суток", category: "Кондитерские" }
     };
 
     function validateEAN13(code) {
@@ -842,11 +625,21 @@
         for (let i = 0; i < 13; i++) sum += (i % 2 === 0) ? parseInt(code[i]) : parseInt(code[i]) * 3;
         return (10 - (sum % 10)) % 10 === parseInt(code[13]);
     }
-    function getCountryByPrefix(code) { return countryPrefixes[code.substring(0, 3)] || `Префикс ${code.substring(0, 3)}`; }
-    function findProductByBarcode(code) { return productDatabase[code] || (code.match(/\d{14}/) && productDatabase[code.match(/\d{14}/)[0]]) || null; }
-    function analyzePrintQuality() { const score = Math.random() * 100; const issues = []; if (score < 60) issues.push("Низкая контрастность"); if (score < 50) issues.push("Размытые границы"); return { score, issues }; }
+    function getCountryByPrefix(code) { 
+        const prefix = code.substring(0, 3);
+        return countryPrefixes[prefix] || `Префикс ${prefix}`; 
+    }
+    function findProductByBarcode(code) { 
+        return productDatabase[code] || (code.match(/\d{14}/) && productDatabase[code.match(/\d{14}/)[0]]) || null; 
+    }
+    function analyzePrintQuality() { 
+        const score = Math.random() * 100; const issues = []; 
+        if (score < 60) issues.push("Низкая контрастность"); 
+        if (score < 50) issues.push("Размытые границы"); 
+        return { score, issues }; 
+    }
 
-    // ========== ОСНОВНАЯ ОБРАБОТКА ==========
+    // ========== ОБРАБОТКА КОДА ==========
     function detectBarcodeType(code) {
         const dmData = parseDataMatrix(code);
         if (dmData && dmData.isValid) return dmData;
@@ -856,19 +649,17 @@
         return { type: "Другой формат", isValid: null };
     }
 
-    function processCode(rawCode) {
-        let code = rawCode;
+    function processCode(code) {
         const detection = detectBarcodeType(code);
         const product = findProductByBarcode(code);
         const printQuality = analyzePrintQuality();
         let status = "unknown", statusText = "⚠️ НЕ ПРОВЕРЕНО", statusClass = "badge-warning";
-        let trustScore = 100;
-        let country = "";
+        let trustScore = 100, country = "";
         
         if (detection.type === "DATAMATRIX") {
             if (detection.hasValidCrypto) {
                 status = "genuine"; statusText = "✅ ПОДЛИННЫЙ (Честный ЗНАК)"; statusClass = "badge-dm"; trustScore = 95;
-                speak(`Товар подлинный. Маркировка Честного знака подтверждена. GTIN: ${detection.gtin || "не найден"}`);
+                speak(`Товар подлинный. Маркировка Честного знака подтверждена. ${product ? product.name : 'GTIN: ' + (detection.gtin || 'не найден')}`);
                 showResult('success');
             } else {
                 status = "fake"; statusText = "❌ ПОДДЕЛКА! (отсутствует криптохвост)"; statusClass = "badge-fake"; trustScore = 10;
@@ -901,6 +692,7 @@
             if (detection.hasValidCrypto) { html += `<div class="info-row"><span class="info-label verified">🔐 Криптохвост:</span><span class="info-value verified">✅ ПРИСУТСТВУЕТ</span></div>`; }
             else { html += `<div class="info-row"><span class="info-label verified">🔐 Криптохвост:</span><span class="info-value verified">❌ ОТСУТСТВУЕТ</span></div>`; }
             if (detection.gtin) html += `<div class="info-row"><span class="info-label verified">📦 GTIN:</span><span class="info-value verified">${detection.gtin}</span></div>`;
+            if (detection.serialNumber) html += `<div class="info-row"><span class="info-label verified">🔢 Серийный №:</span><span class="info-value verified">${detection.serialNumber.substring(0, 13)}${detection.serialNumber.length > 13 ? '...' : ''}</span></div>`;
         } else {
             html += `<div class="info-row"><span class="info-label verified">🔐 Контрольная сумма:</span><span class="info-value verified">${detection.isValid === true ? '✅ ВЕРНА' : (detection.isValid === false ? '❌ НЕ ВЕРНА' : '—')}</span></div>`;
             if (country) html += `<div class="info-row"><span class="info-label verified">🌍 Страна бренда:</span><span class="info-value verified">${country}</span></div>`;
@@ -912,43 +704,145 @@
                 html += `<div class="info-row"><span class="info-label reference">📦 Название:</span><span class="info-value reference">${product.name}</span></div>`;
                 html += `<div class="info-row"><span class="info-label reference">🏭 Производитель:</span><span class="info-value reference">${product.manufacturer}</span></div>`;
                 html += `<div class="info-row"><span class="info-label reference">📅 Срок годности:</span><span class="info-value reference">${product.expiry}</span></div>`;
+                if (product.category) html += `<div class="info-row"><span class="info-label reference">📂 Категория:</span><span class="info-value reference">${product.category}</span></div>`;
             }
             if (detection.type === "DATAMATRIX" && detection.serialNumber) {
-                html += `<div class="info-row"><span class="info-label reference">🔢 Серийный номер:</span><span class="info-value reference">${detection.serialNumber.substring(0, 13)}</span></div>`;
+                html += `<div class="info-row"><span class="info-label reference">🔢 Серийный номер:</span><span class="info-value reference">${detection.serialNumber.substring(0, 13)}${detection.serialNumber.length > 13 ? '...' : ''}</span></div>`;
             }
             html += `</div></div><div class="reference-note">📖 Данные из локальной базы. Могут отличаться.</div>`;
         }
         html += `<div class="trust-meter"><span>🛡️ Уровень доверия: ${trustScore}%</span><div class="meter-bar"><div class="meter-fill" style="width: ${trustScore}%"></div></div></div></div></div>`;
         document.getElementById("resultContainer").innerHTML = html;
         saveToHistory(code.substring(0, 30) + (code.length > 30 ? "..." : ""), product ? product.name : (detection.type === "DATAMATRIX" ? "Маркированный товар" : "Товар не найден"));
-        if (status === "fake") { const panel = document.getElementById("resultContainer"); if (panel) panel.classList.add("vibrate"); setTimeout(() => { if (panel) panel.classList.remove("vibrate"); }, 500); }
+        if (status === "fake") { 
+            const panel = document.getElementById("resultContainer"); 
+            if (panel) panel.classList.add("vibrate"); 
+            setTimeout(() => { if (panel) panel.classList.remove("vibrate"); }, 500); 
+        }
     }
 
-    function processManualCode() { const code = document.getElementById("manualCodeInput").value.trim(); if (!code) { alert("Введите 13 цифр"); return; } processCode(code); document.getElementById("manualResultContainer").innerHTML = document.getElementById("resultContainer").innerHTML; }
+    function processManualCode() { 
+        const code = document.getElementById("manualCodeInput").value.trim().replace(/\D/g, ''); 
+        if (!/^\d{8,14}$/.test(code)) { alert("Введите 8-14 цифр (EAN-8/13, ITF-14)"); return; } 
+        processCode(code); 
+        document.getElementById("manualResultContainer").innerHTML = document.getElementById("resultContainer").innerHTML; 
+    }
 
     // ========== ИСТОРИЯ ==========
-    function saveToHistory(code, name) { let history = JSON.parse(localStorage.getItem("antiai_history_final") || "[]"); history = history.filter(item => item.code !== code); history.unshift({ code: code, name: name || "Товар", time: Date.now() }); history = history.slice(0, 50); localStorage.setItem("antiai_history_final", JSON.stringify(history)); renderHistory(); }
-    function renderHistory() { const container = document.getElementById("historyList"); if (!container) return; let history = JSON.parse(localStorage.getItem("antiai_history_final") || "[]"); if (history.length === 0) { container.innerHTML = "<div style='text-align:center;padding:40px;color:#9ab3c5;'>Нет сканирований</div>"; return; } container.innerHTML = history.map(item => `<div class="history-item" onclick="reprocess('${escapeHtml(item.code)}')"><div class="history-code">${escapeHtml(item.code)}</div><div class="history-name">${escapeHtml(item.name)}</div><div class="history-time">${new Date(item.time).toLocaleString("ru-RU")}</div></div>`).join(''); }
-    function exportHistory() { let history = localStorage.getItem("antiai_history_final"); if (!history || history === "[]") { alert("Нет данных для экспорта"); return; } const blob = new Blob([history], {type: "application/json"}); const url = URL.createObjectURL(blob); const a = document.createElement("a"); a.href = url; a.download = `antiai_export_${Date.now()}.json`; a.click(); URL.revokeObjectURL(url); }
+    function saveToHistory(code, name) { 
+        let history = JSON.parse(localStorage.getItem("antiai_history_final") || "[]"); 
+        history = history.filter(item => item.code !== code); 
+        history.unshift({ code: code, name: name || "Товар", time: Date.now() }); 
+        history = history.slice(0, 50); 
+        localStorage.setItem("antiai_history_final", JSON.stringify(history)); 
+        renderHistory(); 
+    }
+    function renderHistory() { 
+        const container = document.getElementById("historyList"); 
+        if (!container) return; 
+        let history = JSON.parse(localStorage.getItem("antiai_history_final") || "[]"); 
+        if (history.length === 0) { 
+            container.innerHTML = "<div style='text-align:center;padding:40px;color:#9ab3c5;'>Нет сканирований</div>"; 
+            return; 
+        } 
+        container.innerHTML = history.map(item => `<div class="history-item" onclick="reprocess('${escapeHtml(item.code)}')"><div class="history-code">${escapeHtml(item.code)}</div><div class="history-name">${escapeHtml(item.name)}</div><div class="history-time">${new Date(item.time).toLocaleString("ru-RU")}</div></div>`).join(''); 
+    }
+    function exportHistory() { 
+        let history = localStorage.getItem("antiai_history_final"); 
+        if (!history || history === "[]") { alert("Нет данных для экспорта"); return; } 
+        const blob = new Blob([history], {type: "application/json"}); 
+        const url = URL.createObjectURL(blob); 
+        const a = document.createElement("a"); 
+        a.href = url; a.download = `antiai_export_${Date.now()}.json`; a.click(); 
+        URL.revokeObjectURL(url); 
+    }
     function clearHistory() { showConfirm("Очистить всю историю?", () => { localStorage.removeItem("antiai_history_final"); renderHistory(); }); }
     function reprocess(code) { document.getElementById("manualCodeInput").value = code; processCode(code); showScreen("manual"); }
     function escapeHtml(str) { if (!str) return ""; return String(str).replace(/[&<>]/g, m => m === "&" ? "&amp;" : (m === "<" ? "&lt;" : "&gt;")); }
 
     // ========== КАМЕРА ==========
     let currentStream = null, currentCamera = "environment", isScanning = true, lastScannedCode = "", codeReader = null;
-    async function initScanner() { try { codeReader = new ZXing.BrowserMultiFormatReader(); codeReader.timeBetweenDecodingAttempts = 100; await startCamera(); startDecoding(); } catch(e) { console.error("ZXing error:", e); } }
-    async function startCamera() { if (currentStream) currentStream.getTracks().forEach(t => t.stop()); try { currentStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: currentCamera, width: { ideal: 720 }, height: { ideal: 720 } } }); document.getElementById("video").srcObject = currentStream; } catch(err) { alert("🔒 Доступ к камере запрещён. Используйте ручной ввод."); setTimeout(() => showScreen('manual'), 1500); } }
-    function startDecoding() { if (!codeReader) return; const video = document.getElementById("video"); if (!video) return; codeReader.decodeFromVideoElement(video, (result, err) => { if (result && isScanning && result.text !== lastScannedCode) { let code = result.text.replace(/\D/g, ''); if (code.length === 13) processCode(code, 'scannerResult'); lastScannedCode = result.text; isScanning = false; setTimeout(() => { isScanning = true; lastScannedCode = ""; }, 2000); } document.getElementById("qualityFill").style.width = Math.random() * 100 + "%"; }); }
-    function switchCamera() { currentCamera = currentCamera === "environment" ? "user" : "environment"; startCamera(); }
+    
+    async function startCamera() { 
+        if (currentStream) currentStream.getTracks().forEach(t => t.stop()); 
+        try { 
+            currentStream = await navigator.mediaDevices.getUserMedia({ 
+                video: { facingMode: currentCamera, width: { ideal: 720 }, height: { ideal: 720 } } 
+            }); 
+            document.getElementById("video").srcObject = currentStream; 
+        } catch(err) { 
+            console.error("Camera error:", err);
+            alert("🔒 Доступ к камере запрещён. Используйте ручной ввод."); 
+            setTimeout(() => showScreen('manual'), 1500); 
+        } 
+    }
+    
+    function startDecoding() { 
+        if (!codeReader) return; 
+        const video = document.getElementById("video"); 
+        if (!video) return; 
+        codeReader.decodeFromVideoElement(video, (result, err) => { 
+            if (result && isScanning && result.text !== lastScannedCode) { 
+                let code = result.text.replace(/\D/g, ''); 
+                if (code.length >= 8 && code.length <= 14) {
+                    processCode(code);
+                    lastScannedCode = result.text; 
+                    isScanning = false; 
+                    setTimeout(() => { isScanning = true; lastScannedCode = ""; }, 2000); 
+                }
+            } 
+            document.getElementById("qualityFill").style.width = Math.random() * 100 + "%"; 
+        }); 
+    }
+    
+    function switchCamera() { 
+        currentCamera = currentCamera === "environment" ? "user" : "environment"; 
+        startCamera(); 
+    }
 
     // ========== НАВИГАЦИЯ ==========
-    function showScreen(screen) { document.querySelectorAll(".section-screen").forEach(el => el.classList.remove("active")); document.getElementById("menuScreen").style.display = "none"; if (screen === "main") { if (currentStream) { currentStream.getTracks().forEach(track => track.stop()); currentStream = null; } isScanning = true; lastScannedCode = ""; document.getElementById("menuScreen").style.display = "block"; return; } const target = document.getElementById(screen + "Screen"); if (target) target.classList.add("active"); if (screen === "scanner") { setTimeout(() => { if (!codeReader) { codeReader = new ZXing.BrowserMultiFormatReader(); codeReader.timeBetweenDecodingAttempts = 100; } startCamera(); startDecoding(); }, 100); } if (screen === "history") renderHistory(); }
+    function showScreen(screen) { 
+        document.querySelectorAll(".section-screen").forEach(el => el.classList.remove("active")); 
+        document.getElementById("menuScreen").style.display = "none"; 
+        if (screen === "main") { 
+            if (currentStream) { currentStream.getTracks().forEach(track => track.stop()); currentStream = null; } 
+            isScanning = true; lastScannedCode = ""; 
+            document.getElementById("menuScreen").style.display = "block"; 
+            return; 
+        } 
+        const target = document.getElementById(screen + "Screen"); 
+        if (target) target.classList.add("active"); 
+        if (screen === "scanner") { 
+            setTimeout(() => { 
+                if (!codeReader) { 
+                    codeReader = new ZXing.BrowserMultiFormatReader(
+                        { formats: ['EAN_13', 'EAN_8', 'ITF_14', 'DATA_MATRIX', 'QR_CODE'] },
+                        { timeBetweenDecodingAttempts: 100 }
+                    ); 
+                } 
+                startCamera(); startDecoding(); 
+            }, 100); 
+        } 
+        if (screen === "history") renderHistory(); 
+    }
 
-    // ========== МОДАЛЬНОЕ ОКНО ПОДТВЕРЖДЕНИЯ ==========
+    // ========== МОДАЛКА ПОДТВЕРЖДЕНИЯ ==========
     let confirmCallback = null;
-    function showConfirm(message, callback) { const modal = document.getElementById('confirmModal'); const msgEl = document.getElementById('confirmMessage'); if (msgEl) msgEl.textContent = message; confirmCallback = callback; if (modal) modal.classList.add('active'); }
-    function closeConfirmModal() { const modal = document.getElementById('confirmModal'); if (modal) modal.classList.remove('active'); confirmCallback = null; }
-    document.getElementById('confirmOkBtn').onclick = () => { if (confirmCallback) confirmCallback(); closeConfirmModal(); };
+    function showConfirm(message, callback) { 
+        const modal = document.getElementById('confirmModal'); 
+        const msgEl = document.getElementById('confirmMessage'); 
+        if (msgEl) msgEl.textContent = message; 
+        confirmCallback = callback; 
+        if (modal) modal.classList.add('active'); 
+    }
+    function closeConfirmModal() { 
+        const modal = document.getElementById('confirmModal'); 
+        if (modal) modal.classList.remove('active'); 
+        confirmCallback = null; 
+    }
+    document.getElementById('confirmOkBtn').onclick = () => { 
+        if (confirmCallback) confirmCallback(); closeConfirmModal(); 
+    };
 
     // ========== ЗАПУСК ==========
     window.addEventListener("DOMContentLoaded", () => { renderHistory(); });
